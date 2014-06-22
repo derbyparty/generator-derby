@@ -2,6 +2,12 @@
 
 [Yeoman](http://yeoman.io) generator that scaffolds out a [Derby](http://derbyjs.com) 0.6 app.
 
+### Features
+
+* Pure JavaScript/CoffeeScript
+* optional Jade
+* optional Stylus
+* optional Redis
 
 ### Getting Started
 
@@ -15,7 +21,7 @@
 
 * `--skip-install`
 
-  Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
+  Skips the automatic execution of `npm` after scaffolding has finished.
 
 * `--coffee`
 
