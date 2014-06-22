@@ -8,13 +8,14 @@ var chalk = require('chalk');
 
 var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
+    var self = this;
     this.pkg = require('../package.json');
-
-//    console.log(this.appname);
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
-        this.installDependencies();
+        this.installDependencies({callback: function(){
+          self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
+        }});
       }
     });
 
@@ -32,10 +33,15 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       defaults: false
     });
     this.coffee = this.options.coffee;
+
+    this.email    = this.user.git.email;
+    this.username = this.user.git.username;
   },
 
   askFor: function () {
     var done = this.async();
+
+    this.log();
 
     var prompts = [{
       type: 'checkbox',

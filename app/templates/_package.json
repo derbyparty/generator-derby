@@ -27,7 +27,10 @@
     "compression": "*",
     "serve-favicon": "*"
   },
-  "author": "",
+  "author": {
+    "name": "<%= username %>",
+    "email": "<%= email %>"
+  },
   "license": "",
   "readme": "<%= _.slugify(appname) %>\n",
   "readmeFilename": "README.md"
