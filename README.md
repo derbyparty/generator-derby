@@ -4,6 +4,8 @@
 
 ### Features
 
+* Derby 0.6
+* Express 4
 * Pure JavaScript/CoffeeScript
 * optional Jade
 * optional Stylus
