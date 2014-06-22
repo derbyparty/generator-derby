@@ -40,7 +40,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'checkbox',
       name: 'features',
-      message: 'What more would you like?',
+      message: 'Select features',
       choices: [{
         name: 'Jade',
         value: 'includeJade',
