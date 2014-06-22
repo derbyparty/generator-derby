@@ -17,7 +17,7 @@
 - Install: `npm install -g generator-derby`
 - Make app dir: `mkdir myapp`
 - Go into the dir: `cd myapp`
-- Run: `yo derby`
+- Run: `yo derby` or `yo derby --coffee`
 
 ### Options
 
