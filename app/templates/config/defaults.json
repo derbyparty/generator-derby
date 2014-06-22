@@ -1,0 +1,10 @@
+{
+  "NODE_ENV": "development",
+  "PORT": 3000,
+  "MONGO_URL": "mongodb://localhost:27017/derbyapp",
+  "REDIS_HOST": "localhost",
+  "REDIS_PORT": 6379,
+  "REDIS_DATABASE": 11,
+  "SESSION_SECRET": "TOP SECRET 1",
+  "SESSION_COOKIE": "TOP SECRET 2"
+}

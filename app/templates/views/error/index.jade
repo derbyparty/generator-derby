@@ -1,0 +1,18 @@
+import:(src='./403')
+import:(src='./404')
+import:(src='./500')
+Head:
+  script.
+    window.onpopstate = function(e) {
+      var method = e.state && e.state.$method;
+      if (!method) return;
+      if (method === 'get') {
+        window.location = window.location;
+      } else {
+        window.history.back();
+      }
+    }
+Title:
+  | Unknown error
+Body:
+  h1 Unknown error

@@ -1,0 +1,34 @@
+{
+  "name": "<%= _.slugify(appname) %>",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {<% if (coffee) { %>
+    "start": "coffee server.coffee",<% } else { %>
+    "start": "node server.js",<% } %>
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "derby": "0.6.0-alpha21",
+    "racer-browserchannel": "~0.2.0",
+    "livedb-mongo": "~0.3.0",<% if (includeStylus) { %>
+    "derby-stylus": "~0.1.0",<% } %><% if (includeJade) { %>
+    "derby-jade": "*", <% } %>
+    "racer-bundle": "~0.1.0",
+    "connect-mongo": "*",<% if (includeRedis) { %>
+    "redis":"*",
+    "connect-redis": "*",<% } %><% if (coffee) { %>
+    "coffee-script": "*",
+    "coffeeify": "*",<% } %>
+    "express": "~4.4.3",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "serve-static": "*",
+    "compression": "*",
+    "serve-favicon": "*"
+  },
+  "author": "",
+  "license": "",
+  "readme": "<%= _.slugify(appname) %>\n",
+  "readmeFilename": "README.md"
+}
