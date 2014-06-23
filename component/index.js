@@ -26,6 +26,14 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
       }
     });
 
+    this.option('coffee', {
+      desc: 'Use CoffeeScript',
+      type: Boolean,
+      defaults: false
+    });
+    
+    this.coffee = this.options.coffee;
+    
     this.email = this.user.git.email;
     this.username = this.user.git.username;
   },
@@ -66,11 +74,6 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
         {
           name: 'Stylus (CSS)',
           value: 'stylus',
-          checked: this.config.get('stylus')
-        },
-        {
-          name: 'CoffeeScript (JavaScript)',
-          value: 'coffee',
           checked: this.config.get('stylus')
         }
       ]
