@@ -17,6 +17,15 @@ var DerbyGenerator = yeoman.generators.Base.extend({
           self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
         }});
       }
+        
+      self.config.defaults({
+        app: self.app,
+        coffee: self.coffee,
+        stylus: self.includeStylus,
+        jade: self.includeJade
+      });
+      
+      self.config.save();
     });
 
     // setup the test-framework property, Gruntfile template will need this
@@ -32,6 +41,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       type: Boolean,
       defaults: false
     });
+    
     this.coffee = this.options.coffee;
 
     this.email    = this.user.git.email;
@@ -41,7 +51,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   askFor: function () {
     var done = this.async();
 
-    this.log('Derby 0.6 generator:\n');
+    this.log('Derby 0.6 App generator:\n');
 
     var prompts = [{
       type: 'checkbox',
