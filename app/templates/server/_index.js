@@ -67,7 +67,7 @@ var expressApp = module.exports = express()
   })
   .use(error);
 
-app.writeScripts(store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>});
+app.writeScripts(store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}, function(){});
 
 function createUserId(req, res, next) {
   var model = req.getModel();

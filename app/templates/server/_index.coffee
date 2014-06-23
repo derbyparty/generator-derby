@@ -72,5 +72,5 @@ expressApp = module.exports = express()
     next('404: ' + req.url)
   .use error
 
-app.writeScripts store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}
+app.writeScripts store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}, ->
 
