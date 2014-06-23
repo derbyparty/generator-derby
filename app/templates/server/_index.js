@@ -18,71 +18,56 @@ var racerBundle = require('racer-bundle');
 
 var error = require('./error');
 
-var connectStore, sessionStore;
+var mongoUrl = 'mongodb://localhost:27017/' + process.env.MONGO_DB;
 
-module.exports = function (cb) {
-  <% if (includeRedis) { %>
-  var redis = require('redis');
+var connectStore = require('connect-mongo')(session);
+var sessionStore = new connectStore({url: mongoUrl});
+<% if (includeRedis) { %>
+var redisClient = require('redis').createClient();
+redisClient.select(process.env.REDIS_DB);
 
-  var redisClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+store = derby.createStore({
+  db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true}),
+  redis: redisClient
+});
+<% } else { %>
+store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})});
+<% } %>
+derby.use(racerBundle);
 
-  connectStore = require('connect-redis')(session);
-  sessionStore = new connectStore({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
-  });
+var publicDir = path.join(__dirname, '/../public');
+<% if (coffee) { %>
+store.on('bundle', function (browserify) {
 
-  var store = derby.createStore({
-    db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true}),
-    redis: redisClient
-  });
+  browserify.transform({global: true}, coffeeify);
 
-  <% } else { %>
-  connectStore = require('connect-mongo')(session);
-  sessionStore = new connectStore({url: process.env.MONGO_URL});
+  var pack = browserify.pack;
+  browserify.pack = function (opts) {
+    var detectTransform = opts.globalTransform.shift();
+    opts.globalTransform.push(detectTransform);
+    return pack.apply(this, arguments);
+  };
+});
+<% } %>
+var expressApp = module.exports = express()
+  .use(compression())
+  .use(serveStatic(publicDir))
+  .use(racerBrowserChannel(store))
+  .use(store.modelMiddleware())
+  .use(cookieParser())
+  .use(session({
+    secret: process.env.SESSION_SECRET,
+    store: sessionStore,
+    cookie: process.env.SESSION_COOKIE
+  }))
+  .use(createUserId)
+  .use(app.router())
+  .all('*', function (req, res, next) {
+    next('404: ' + req.url);
+  })
+  .use(error);
 
-  var store = derby.createStore({db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true})});
-  <% } %>
-
-  derby.use(racerBundle);
-
-  var publicDir = path.join(__dirname, '/../public');
-  <% if (coffee) { %>
-  store.on('bundle', function (browserify) {
-
-    browserify.transform({global: true}, coffeeify);
-
-    var pack = browserify.pack;
-    browserify.pack = function (opts) {
-      var detectTransform = opts.globalTransform.shift();
-      opts.globalTransform.push(detectTransform);
-      return pack.apply(this, arguments);
-    };
-  });
-  <% } %>
-  var expressApp = module.exports = express()
-    .use(compression())
-    .use(serveStatic(publicDir))
-    .use(racerBrowserChannel(store))
-    .use(store.modelMiddleware())
-    .use(cookieParser())
-    .use(session({
-      secret: process.env.SESSION_SECRET,
-      store: sessionStore,
-      cookie: process.env.SESSION_COOKIE
-    }))
-    .use(createUserId)
-    .use(app.router())
-    .all('*', function (req, res, next) {
-      next('404: ' + req.url);
-    })
-    .use(error);
-
-  app.writeScripts(store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}, function (err) {
-    cb && cb(err, expressApp);
-  });
-
-}
+app.writeScripts(store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>});
 
 function createUserId(req, res, next) {
   var model = req.getModel();

@@ -41,7 +41,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   askFor: function () {
     var done = this.async();
 
-    this.log();
+    this.log('Derby 0.6 generator:\n');
 
     var prompts = [{
       type: 'checkbox',
@@ -84,13 +84,14 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.mkdir('components');
     this.mkdir('config');
-    this.copy('config/defaults.json', 'config/defaults.json');
+    this.template('config/_defaults.json', 'config/defaults.json');
+
+    this.mkdir('test');
 
     this.mkdir('public');
     this.mkdir('server');
     this.copy('server/error.'+js, 'server/error.'+js);
     this.template('server/_index.' + js, 'server/index.'+js);
-
 
     this.mkdir('src');
 

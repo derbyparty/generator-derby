@@ -9,12 +9,9 @@ for(var key in defaults) {
 derby.run(createServer);
 
 function createServer() {
-  var server = require('./server/index');
+  var expressApp = require('./server/index');
 
-  server(function (err, expressApp) {
-    if (err) throw err;
-    http.createServer(expressApp).listen(process.env.PORT, listenCallback);
-  });
+  http.createServer(expressApp).listen(process.env.PORT, listenCallback);
 }
 
 function listenCallback(err) {

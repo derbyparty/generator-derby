@@ -9,11 +9,9 @@ listenCallback = (err) ->
   console.log '%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT
 
 createServer = () ->
-  server = require './server/index'
+  expressApp = require './server/index'
 
-  server (err, expressApp) ->
-    if err then throw err
-    http.createServer(expressApp).listen process.env.PORT, listenCallback
+  http.createServer(expressApp).listen process.env.PORT, listenCallback
 
 derby.run createServer
 

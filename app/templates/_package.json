@@ -9,15 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "derby": "0.6.0-alpha21",
+    "derby": "0.6.0-alpha22",
     "racer-browserchannel": "~0.2.0",
     "livedb-mongo": "~0.3.0",<% if (includeStylus) { %>
     "derby-stylus": "~0.1.0",<% } %><% if (includeJade) { %>
     "derby-jade": "*", <% } %>
     "racer-bundle": "~0.1.0",
     "connect-mongo": "*",<% if (includeRedis) { %>
-    "redis":"*",
-    "connect-redis": "*",<% } %><% if (coffee) { %>
+    "redis":"*",<% } %><% if (coffee) { %>
     "coffee-script": "*",
     "coffeeify": "*",<% } %>
     "express": "~4.4.3",

@@ -26,59 +26,51 @@ createUserId = (req, res, next) ->
   model.set '_session.userId', userId
   next()
 
-module.exports = (cb) ->
-  <% if (includeRedis) { %>
-  redis = require 'redis'
+mongoUrl = 'mongodb://localhost:27017/' + process.env.MONGO_DB
 
-  redisClient = redis.createClient process.env.REDIS_PORT, process.env.REDIS_HOST
+connectStore = require('connect-mongo')(session)
+sessionStore = new connectStore url: mongoUrl
+<% if (includeRedis) { %>
+redisClient = require('redis').createClient()
+redisClient.select process.env.REDIS_DB
 
-  connectStore = require('connect-redis')(session)
-  sessionStore = new connectStore
-    host: process.env.REDIS_HOST
-    port: process.env.REDIS_PORT
+store = derby.createStore
+  db: liveDbMongo mongoUrl + '?auto_reconnect', {safe: true}
+  redis: redisClient
+<% } else { %>
+store = derby.createStore db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})
+<% } %>
 
-  store = derby.createStore
-    db: liveDbMongo process.env.MONGO_URL + '?auto_reconnect', {safe: true}
-    redis: redisClient
+derby.use racerBundle
 
-  <% } else { %>
-  connectStore = require('connect-mongo')(session)
-  sessionStore = new connectStore url: process.env.MONGO_URL
+publicDir = path.join __dirname, '/../public'
+<% if (coffee) { %>
+store.on 'bundle', (browserify) ->
 
-  store = derby.createStore db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true})
-  <% } %>
+  browserify.transform {global: true}, coffeeify
 
-  derby.use racerBundle
+  pack = browserify.pack
+  browserify.pack = (opts) ->
+    detectTransform = opts.globalTransform.shift()
+    opts.globalTransform.push detectTransform
+    pack.apply this, arguments
 
-  publicDir = path.join __dirname, '/../public'
-  <% if (coffee) { %>
-  store.on 'bundle', (browserify) ->
+<% } %>
+expressApp = module.exports = express()
+  .use compression()
+  .use serveStatic(publicDir)
+  .use racerBrowserChannel(store)
+  .use store.modelMiddleware()
+  .use cookieParser()
+  .use session
+    secret: process.env.SESSION_SECRET
+    store: sessionStore
+    cookie: process.env.SESSION_COOKIE
+  .use createUserId
+  .use app.router()
+  .all '*', (req, res, next) ->
+    next('404: ' + req.url)
+  .use error
 
-    browserify.transform {global: true}, coffeeify
-
-    pack = browserify.pack
-    browserify.pack = (opts) ->
-      detectTransform = opts.globalTransform.shift()
-      opts.globalTransform.push detectTransform
-      pack.apply this, arguments
-
-  <% } %>
-  expressApp = module.exports = express()
-    .use compression()
-    .use serveStatic(publicDir)
-    .use racerBrowserChannel(store)
-    .use store.modelMiddleware()
-    .use cookieParser()
-    .use session
-      secret: process.env.SESSION_SECRET
-      store: sessionStore
-      cookie: process.env.SESSION_COOKIE
-    .use createUserId
-    .use app.router()
-    .all '*', (req, res, next) ->
-      next('404: ' + req.url)
-    .use error
-
-  app.writeScripts store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}, (err) ->
-    cb and cb(err, expressApp)
+app.writeScripts store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}
 
