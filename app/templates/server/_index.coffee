@@ -26,7 +26,7 @@ createUserId = (req, res, next) ->
   model.set '_session.userId', userId
   next()
 
-mongoUrl = 'mongodb://localhost:27017/' + process.env.MONGO_DB
+mongoUrl = process.env.MONGO_URL + process.env.MONGO_DB
 
 connectStore = require('connect-mongo')(session)
 sessionStore = new connectStore url: mongoUrl
