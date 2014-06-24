@@ -1,0 +1,6 @@
+{
+  "name": "d-<%= _.slugify(name) %>",
+  "version": "0.0.0",
+  "dependencies": {},
+  "exportsOverride": {}
+}

@@ -19,6 +19,22 @@
 - Go into the dir: `cd myapp`
 - Run: `yo derby` or `yo derby --coffee`
 
+### Generators
+
+#### `yo derby:app` (aka `yo derby`)
+Create a new Derby app.
+
+#### `yo derby:component "Humanish Name"`
+Creates a [Derby component][].
+
+Run inside of an app (created with `yo derby[:app]`), the new component will
+be put into `src/app/components/<component-name>`.
+
+Run in an empty directory, the new component will be a new package, ready for
+publishing to NPM, with the `d-` prefix.
+
+The package and class name will be derived from the humanish name.
+
 ### Options
 
 * `--skip-install`
@@ -49,3 +65,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+[Derby component]: https://github.com/codeparty/derby/blob/master/docs/guides/components.md

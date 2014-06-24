@@ -1,0 +1,26 @@
+{
+  "name": "<%= pkgName %>",
+  "description": "",
+  "version": "0.0.0",
+  "main": "index.js",
+  "keywords": [
+    "derby",
+    "component"
+  ],
+  "scripts": {
+    "test": "echo 'No tests yet!'; exit(1);"
+  },
+  "author": {
+    "name": "<%= username %>",
+    "email": "<%= email %>"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    <% if (stylus) { %>"derby-jade": "*",<% } %>
+    <% if (jade) { %>"derby-stylus": "*",<% } %>
+    <% if (coffee) { %>"coffee-script": "*",<% } %>
+    "derby": ">= 0.6.0 < 0.7"
+  }
+}

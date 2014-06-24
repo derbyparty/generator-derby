@@ -12,6 +12,16 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
 
     this.on('end', function () {
+        
+      this.config.defaults({
+        app: this.appname,
+        coffee: this.coffee,
+        stylus: this.includeStylus,
+        jade: this.includeJade
+      });
+      
+      this.config.save();
+      
       if (!this.options['skip-install']) {
         this.installDependencies({callback: function(){
           self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
@@ -32,6 +42,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       type: Boolean,
       defaults: false
     });
+    
     this.coffee = this.options.coffee;
 
     this.email    = this.user.git.email;
@@ -41,7 +52,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   askFor: function () {
     var done = this.async();
 
-    this.log('Derby 0.6 generator:\n');
+    this.log('Derby 0.6 App generator:\n');
 
     var prompts = [{
       type: 'checkbox',
@@ -82,7 +93,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var html  = this.includeJade ? 'jade': 'html';
     var css   = this.includeStylus?  'styl': 'css';
 
-    this.mkdir('components');
     this.mkdir('config');
     this.template('config/_defaults.json', 'config/defaults.json');
 
