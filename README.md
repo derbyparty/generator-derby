@@ -24,14 +24,16 @@
 #### `yo derby:app` (aka `yo derby`)
 Create a new Derby app.
 
-#### `yo derby:component`
+#### `yo derby:component "Humanish Name"`
 Creates a [Derby component][].
 
-If executed inside of an app created with `yo derby[:app]`, it will be
-installed into `src/components/<component-name>`.
+Run inside of an app (created with `yo derby[:app]`), the new component will
+be put into `src/app/components/<component-name>`.
 
-If executed in an empty directory, it will create a new package, ready for
-publishing NPM.
+Run in an empty directory, the new component will be a new package, ready for
+publishing to NPM, with the `d-` prefix.
+
+The package and class name will be derived from the humanish name.
 
 ### Options
 
