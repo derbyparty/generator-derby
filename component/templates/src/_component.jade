@@ -1,12 +1,2 @@
 index:
   .<%= component %>
-    svg(width="{{width}}" height="{{height}}")
-      g.bars
-        each layout as #d, #i
-          rect.bar(
-            x="{{#d.x}}"
-            y="{{#d.y}}"
-            width="{{#d.width}}"
-            height="{{#d.height}}"
-            on-click="clicker(#d, #i, $event, $element)"
-          )

@@ -9,22 +9,22 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "derby": "0.6.0-alpha22",
-    "racer-browserchannel": "~0.2.0",
-    "livedb-mongo": "~0.3.0",<% if (includeStylus) { %>
-    "derby-stylus": "~0.1.0",<% } %><% if (includeJade) { %>
-    "derby-jade": "*", <% } %>
-    "racer-bundle": "~0.1.0",
-    "connect-mongo": "*",<% if (includeRedis) { %>
-    "redis":"*",<% } %><% if (coffee) { %>
-    "coffee-script": "*",
-    "coffeeify": "*",<% } %>
-    "express": "~4.4.3",
-    "cookie-parser": "*",
-    "express-session": "*",
-    "serve-static": "*",
-    "compression": "*",
-    "serve-favicon": "*"
+    "derby": "0.6.0-alpha23",
+    "racer-browserchannel": "^0.2",
+    "livedb-mongo": "^0.3",<% if (includeStylus) { %>
+    "derby-stylus": "^0.1",<% } %><% if (includeJade) { %>
+    "derby-jade": "^0.28", <% } %>
+    "racer-bundle": "^0.1",
+    "connect-mongo": "^0.4",<% if (includeRedis) { %>
+    "redis":"^0.10",<% } %><% if (coffee) { %>
+    "coffee-script": "^1.7",
+    "coffeeify": "^0.6",<% } %>
+    "express": "^4.4",
+    "cookie-parser": "^1.3",
+    "express-session": "^1.4",
+    "serve-static": "^2.0",
+    "compression": "^1.0",
+    "serve-favicon": "^2.0"
   },
   "author": {
     "name": "<%= username %>",
