@@ -18,7 +18,7 @@ var racerBundle = require('racer-bundle');
 
 var error = require('./error');
 
-var mongoUrl = 'mongodb://localhost:27017/' + process.env.MONGO_DB;
+var mongoUrl = process.env.MONGO_URL + process.env.MONGO_DB;
 
 var connectStore = require('connect-mongo')(session);
 var sessionStore = new connectStore({url: mongoUrl});
