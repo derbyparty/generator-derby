@@ -10,8 +10,8 @@ var _ = require('yeoman-generator/lib/actions/string')._;
 var Generator = module.exports = yeoman.generators.NamedBase.extend({
   init: function () {
     var self = this;
-    var cfg = this.config.loadConfig();
-    
+    this.config.loadConfig();
+    var cfg = this.config.getAll();
 
     this.option('coffee', {
       desc: 'Use CoffeeScript',
@@ -39,12 +39,6 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
       if(!cfg.app){ return; }
       
       this.config.save();
-      
-      if (!this.options['skip-install']) {
-        this.installDependencies({callback: function(){
-          self.log('The component is ready to be customized!');
-        }});
-      }
     });
 
   },
@@ -66,7 +60,7 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
     if(cfg.app){
       this.log(
         chalk.cyan('I\'ve found an app named ') + 
-        chalk.yellow(app)
+        chalk.yellow(cfg.app)
       );
     }else{
       this.config.defaults({

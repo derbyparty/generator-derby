@@ -12,20 +12,21 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
 
     this.on('end', function () {
+        
+      this.config.defaults({
+        app: this.appname,
+        coffee: this.coffee,
+        stylus: this.includeStylus,
+        jade: this.includeJade
+      });
+      
+      this.config.save();
+      
       if (!this.options['skip-install']) {
         this.installDependencies({callback: function(){
           self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
         }});
       }
-        
-      self.config.defaults({
-        app: self.app,
-        coffee: self.coffee,
-        stylus: self.includeStylus,
-        jade: self.includeJade
-      });
-      
-      self.config.save();
     });
 
     // setup the test-framework property, Gruntfile template will need this
@@ -92,7 +93,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var html  = this.includeJade ? 'jade': 'html';
     var css   = this.includeStylus?  'styl': 'css';
 
-    this.mkdir('components');
     this.mkdir('config');
     this.template('config/_defaults.json', 'config/defaults.json');
 
