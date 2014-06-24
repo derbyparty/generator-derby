@@ -13,7 +13,7 @@
     "racer-browserchannel": "^0.2",
     "livedb-mongo": "^0.3",<% if (includeStylus) { %>
     "derby-stylus": "^0.1",<% } %><% if (includeJade) { %>
-    "derby-jade": "^0.28", <% } %>
+    "derby-jade": "*", <% } %>
     "racer-bundle": "^0.1",
     "connect-mongo": "^0.4",<% if (includeRedis) { %>
     "redis":"^0.10",<% } %><% if (coffee) { %>
