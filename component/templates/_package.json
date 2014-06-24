@@ -1,12 +1,11 @@
 {
-  "name": "d-<%= _.slugify(name) %>",
-  "description": "Example bar chart Derby component with pure js",
+  "name": "<%= pkgName %>",
+  "description": "",
   "version": "0.0.0",
   "main": "index.js",
   "keywords": [
     "derby",
-    "component",
-    "datavis"
+    "component"
   ],
   "scripts": {
     "test": "echo 'No tests yet!'; exit(1);"

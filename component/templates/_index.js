@@ -1,6 +1,6 @@
 <% if(coffee){ %>
 require("coffee-script/register");
-module.exports = require("./src/d-<%= _.slugify(name) %>");
+module.exports = require("./src/<%= component %>");
 <% }else{ %>
-module.exports = require("./lib/d-<%= _.slugify(name) %>"); 
+module.exports = require("./lib/<%= component %>"); 
 <% } %>

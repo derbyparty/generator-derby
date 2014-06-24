@@ -10,21 +10,8 @@ var _ = require('yeoman-generator/lib/actions/string')._;
 var Generator = module.exports = yeoman.generators.NamedBase.extend({
   init: function () {
     var self = this;
+    var cfg = this.config.loadConfig();
     
-    this.config.loadConfig();
-    
-    this.on('end', function () {
-      // if this was a subcomponent, we are done
-      if(!this.config.get("app")){ return; }
-      
-      this.config.save();
-      
-      if (!this.options['skip-install']) {
-        this.installDependencies({callback: function(){
-          self.log('\The component is ready to be customized!');
-        }});
-      }
-    });
 
     this.option('coffee', {
       desc: 'Use CoffeeScript',
@@ -32,29 +19,58 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
       defaults: false
     });
     
+    // is this already inside an app?
+    this.app = cfg.app;
+    
+    // add the derby `d-` namespace for standalone components
+    this.component = _.slugify(this.name);
+    this.pkgName = (cfg.app ? "" : "d-") + this.component;
+    
+    // name the class
+    this.className = _.classify(_.slugify(this.name));
+    
     this.coffee = this.options.coffee;
     
     this.email = this.user.git.email;
     this.username = this.user.git.username;
+    
+    this.on('end', function () {
+      // if this was a subcomponent, we are done
+      if(!cfg.app){ return; }
+      
+      this.config.save();
+      
+      if (!this.options['skip-install']) {
+        this.installDependencies({callback: function(){
+          self.log('The component is ready to be customized!');
+        }});
+      }
+    });
+
   },
 
   askFor: function () {
     var done = this.async();
-    var app = this.config.get("app");
+    var cfg = this.config.getAll();
     
     this.log(
       chalk.yellow('Derby 0.6 Component Generator for ') +
-      chalk.red('d-' + _.slugify(this.name))
+      chalk.cyan(this.component)
     );
     
-    if(app){
+    this.log(
+      chalk.yellow('The class will be called ') +
+      chalk.cyan(this.className)
+    );
+    
+    if(cfg.app){
       this.log(
-        chalk.cyan('I\'ve loaded these from your app named ') + 
+        chalk.cyan('I\'ve found an app named ') + 
         chalk.yellow(app)
       );
     }else{
       this.config.defaults({
-        component: 'd-' + _.slugify(this.name),
+        component: this.component,
         jade: true,
         coffee: true,
         stylus: true
@@ -69,12 +85,12 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
         {
           name: 'Jade (HTML)',
           value: 'jade',
-          checked: this.config.get('jade')
+          checked: !!cfg.jade
         },
         {
           name: 'Stylus (CSS)',
           value: 'stylus',
-          checked: this.config.get('stylus')
+          checked: !!cfg.stylus
         }
       ]
     }];
@@ -97,8 +113,9 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
     var js = this.coffee ? 'coffee': 'js';
     var html = this.jade ? 'jade': 'html';
     var css = this.stylus ?  'styl': 'css';
-    var name = 'd-' + _.slugify(this.name);
     var src = this.coffee ? "src" : "lib";
+    
+    var name = this.component;
     
     var srcDir = function(p){ return path.join(src, name, p); };
   
@@ -109,12 +126,14 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
       this.template('_index.js', 'index.js');
     }else{
       srcDir = function(p){
-        return path.join('src', 'components', name, p);
+        return path.join('src', 'app', 'components', name, p);
       };
       this.template('_README.md', srcDir('README.md'));
     }
     this.template('src/_index.' + js, srcDir('index.' + js));
-    this.template('src/_index.' + css, srcDir('index.' + css));
-    this.template('src/_index.' + html, srcDir('index.' + html));
+    this.template('src/_component.' + js, srcDir(name + '.' + js));
+    this.template('src/_component.' + css, srcDir(name + '.' + css));
+    this.template('src/_component.' + html, srcDir(name + '.' + html));
+    
   }
 });
