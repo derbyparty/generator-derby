@@ -20,7 +20,11 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "derby",
+    "scaffoling tool",
+    "derbyjs",
+    "derby 0.6"
   ],
   "dependencies": {
     "yeoman-generator": "~0.16.0",
