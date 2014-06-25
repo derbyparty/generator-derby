@@ -16,8 +16,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.config.defaults({
         app: this.appname,
         coffee: this.coffee,
-        stylus: this.includeStylus,
-        jade: this.includeJade
+        stylus: this.stylus,
+        jade: this.jade
       });
       
       this.config.save();
@@ -60,15 +60,15 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       message: 'Select features',
       choices: [{
         name: 'Jade',
-        value: 'includeJade',
+        value: 'jade',
         checked: true
       },{
         name: 'Stylus',
-        value: 'includeStylus',
+        value: 'stylus',
         checked: true
       },{
         name: 'Redis',
-        value: 'includeRedis',
+        value: 'redis',
         checked: false
       }]
     }];
@@ -80,9 +80,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         return features && features.indexOf(feat) !== -1;
       }
 
-      this.includeJade    = hasFeature('includeJade');
-      this.includeStylus  = hasFeature('includeStylus');
-      this.includeRedis   = hasFeature('includeRedis');
+      this.jade    = hasFeature('jade');
+      this.stylus  = hasFeature('stylus');
+      this.redis   = hasFeature('redis');
 
       done();
     }.bind(this));
@@ -90,8 +90,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
   app: function () {
     var js    = this.coffee ? 'coffee': 'js';
-    var html  = this.includeJade ? 'jade': 'html';
-    var css   = this.includeStylus?  'styl': 'css';
+    var html  = this.jade ? 'jade': 'html';
+    var css   = this.stylus?  'styl': 'css';
+
+    this.mkdir('components');
 
     this.mkdir('config');
     this.template('config/_defaults.json', 'config/defaults.json');

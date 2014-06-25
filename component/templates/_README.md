@@ -11,13 +11,9 @@ A [Derby](http://github.com/codeparty/derby) component.
 # Usage
 
 ## In your app
-```javascript<% if(app) { %>
-// Associate component with view already registered in app
-app.component('<%= component %>', require('./components/<%= component %>'));
-<% } else { %>
+```javascript
 // Use component published as module
 app.component(require('<%= pkgName %>'));
-<% } %>
 ```
 
 ## In your template

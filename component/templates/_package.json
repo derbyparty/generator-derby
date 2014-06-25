@@ -2,7 +2,7 @@
   "name": "<%= pkgName %>",
   "description": "",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "./lib/<%= component %>.<% if (coffee) {%>coffee<% } else {%>js<% } %>",
   "keywords": [
     "derby",
     "component"
@@ -17,10 +17,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {},
-  "peerDependencies": {
-    <% if (stylus) { %>"derby-jade": "*",<% } %>
-    <% if (jade) { %>"derby-stylus": "*",<% } %>
-    <% if (coffee) { %>"coffee-script": "*",<% } %>
+  "peerDependencies": {<% if (stylus) { %>
+    "derby-jade": "*",<% } %><% if (jade) { %>
+    "derby-stylus": "*",<% } %><% if (coffee) { %>
+    "coffee-script": "*",<% } %>
     "derby": ">= 0.6.0 < 0.7"
   }
 }

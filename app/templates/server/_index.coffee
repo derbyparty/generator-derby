@@ -26,11 +26,11 @@ createUserId = (req, res, next) ->
   model.set '_session.userId', userId
   next()
 
-mongoUrl = process.env.MONGO_URL + process.env.MONGO_DB
+mongoUrl = process.env.MONGO_URL
 
 connectStore = require('connect-mongo')(session)
 sessionStore = new connectStore url: mongoUrl
-<% if (includeRedis) { %>
+<% if (redis) { %>
 redisClient = require('redis').createClient()
 redisClient.select process.env.REDIS_DB
 

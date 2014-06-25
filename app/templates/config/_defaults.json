@@ -1,8 +1,7 @@
 {
   "NODE_ENV": "development",
   "PORT": 3000,
-  "MONGO_URL": "mongodb://localhost:27017/",
-  "MONGO_DB": "derbyapp",<% if (includeRedis) { %>
+  "MONGO_URL": "mongodb://localhost:27017/<%= _.slugify(appname)%>",<% if (redis) { %>
   "REDIS_DB": "10",<% } %>
   "SESSION_SECRET": "TOP SECRET 1",
   "SESSION_COOKIE": "TOP SECRET 2"

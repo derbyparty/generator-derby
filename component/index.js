@@ -62,45 +62,46 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
         chalk.cyan('I\'ve found an app named ') + 
         chalk.yellow(cfg.app)
       );
-    }else{
-      this.config.defaults({
-        component: this.component,
-        jade: true,
-        coffee: true,
-        stylus: true
-      });
-    }
 
-    var prompts = [{
-      type: 'checkbox',
-      name: 'features',
-      message: 'Select preprocessors',
-      choices: [
-        {
-          name: 'Jade (HTML)',
-          value: 'jade',
-          checked: !!cfg.jade
-        },
-        {
-          name: 'Stylus (CSS)',
-          value: 'stylus',
-          checked: !!cfg.stylus
-        }
-      ]
-    }];
+      this.coffee = cfg.coffee;
+      this.jade   = cfg.jade;
+      this.stylus = cfg.stylus;
 
-    this.prompt(prompts, function (answers) {
-      var features = answers.features || [];
-      prompts[0].choices.forEach(function(feature){
-        var val = feature.value;
-        this.config.set(
-          val,
-          this[val] = features.indexOf(val) !== -1
-        );
-        
-      }.bind(this));
       done();
-    }.bind(this));
+    }else{
+
+      var prompts = [{
+        type: 'checkbox',
+        name: 'features',
+        message: 'Select preprocessors',
+        choices: [
+          {
+            name: 'Jade (HTML)',
+            value: 'jade',
+            checked: true
+          },
+          {
+            name: 'Stylus (CSS)',
+            value: 'stylus',
+            checked: true
+          }
+        ]
+      }];
+
+      this.prompt(prompts, function (answers) {
+        var features = answers.features || [];
+
+        function hasFeature(feat) {
+          return features && features.indexOf(feat) !== -1;
+        }
+
+        this.jade    = hasFeature('jade');
+        this.stylus  = hasFeature('stylus');
+
+        done();
+      }.bind(this));
+
+    }
   },
 
   component: function () {
@@ -117,14 +118,15 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
       this.template('_README.md', 'README.md');
-      this.template('_index.js', 'index.js');
+//      this.template('_index.js', 'index.js');
     }else{
       srcDir = function(p){
-        return path.join('src', 'app', 'components', name, p);
+//        return path.join('src', 'app', 'components', name, p);
+        return path.join('components', name, p);
       };
       this.template('_README.md', srcDir('README.md'));
     }
-    this.template('src/_index.' + js, srcDir('index.' + js));
+//    this.template('src/_index.' + js, srcDir('index.' + js));
     this.template('src/_component.' + js, srcDir(name + '.' + js));
     this.template('src/_component.' + css, srcDir(name + '.' + css));
     this.template('src/_component.' + html, srcDir(name + '.' + html));

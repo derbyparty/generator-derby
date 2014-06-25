@@ -9,8 +9,8 @@ var derby = require('derby');
 
 var app = require('../src/app');
 
-var path = require('path');<% if (coffee) { %>
-var coffeeify = require('coffeeify'); <% } %>
+var path = require('path');
+var coffeeify = require('coffeeify');
 
 var racerBrowserChannel = require('racer-browserchannel');
 var liveDbMongo = require('livedb-mongo');
@@ -18,11 +18,11 @@ var racerBundle = require('racer-bundle');
 
 var error = require('./error');
 
-var mongoUrl = process.env.MONGO_URL + process.env.MONGO_DB;
+var mongoUrl = process.env.MONGO_URL;
 
 var connectStore = require('connect-mongo')(session);
 var sessionStore = new connectStore({url: mongoUrl});
-<% if (includeRedis) { %>
+<% if (redis) { %>
 var redisClient = require('redis').createClient();
 redisClient.select(process.env.REDIS_DB);
 
@@ -36,7 +36,7 @@ store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: 
 derby.use(racerBundle);
 
 var publicDir = path.join(__dirname, '/../public');
-<% if (coffee) { %>
+
 store.on('bundle', function (browserify) {
 
   browserify.transform({global: true}, coffeeify);
@@ -48,7 +48,7 @@ store.on('bundle', function (browserify) {
     return pack.apply(this, arguments);
   };
 });
-<% } %>
+
 var expressApp = module.exports = express()
   .use(compression())
   .use(serveStatic(publicDir))
