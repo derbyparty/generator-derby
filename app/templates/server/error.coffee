@@ -1,4 +1,4 @@
-errorApp = require('../src/error');
+errorApp = require('../src/error')
 
 module.exports = (err, req, res, next) ->
   if not err then return next()
