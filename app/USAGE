@@ -3,14 +3,17 @@ Description:
 
 Options:
     Jade: Include Jade
+    Stylus: Include Stylus
+    Redis: Include Redis
 
 Example:
     yo derby [--coffee]
 
     This will create:
-        Gruntfile.js: Configuration for the task runner.
-        _bower.json: Front-end packages installed by bower.
-        _package.json: Development packages installed by npm.
+        package.json: Development packages installed by npm.
 
-        src/: Your application files.
+        src/: Your derby 0.6 application files.
+        components/: Your local components.
+        views/: Your template files.
+        styles/: Your css/stylus files.
         test/: Unit tests for your application.
