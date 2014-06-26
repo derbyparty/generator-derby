@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "node_modules/.bin/jshint {test,app,component}/*.js && node_modules/.bin/mocha"
   },
   "files": [
     "app"
