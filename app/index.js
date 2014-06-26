@@ -70,6 +70,22 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         name: 'Redis',
         value: 'redis',
         checked: false
+      },{
+        name: 'Derby-log',
+        value: 'login',
+        checked: false
+      },{
+        name: 'Bootstrap 3',
+        value: 'bootstrap',
+        checked: false
+      },{
+        name: 'Derby-login',
+        value: 'login',
+        checked: false
+      },{
+        name: 'Racer-schema',
+        value: 'schema',
+        checked: false
       }]
     }];
 
