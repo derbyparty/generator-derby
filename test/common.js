@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs'),
   path = require('path'),
   _ = require('yeoman-generator/lib/actions/string')._,
@@ -9,7 +11,7 @@ var fs = require('fs'),
   jsonlint = require('jsonlint').parse,
   jade = (function(fakeApp){
       require('derby-jade')(fakeApp);
-      return fakeApp.compilers[".jade"];
+      return fakeApp.compilers['.jade'];
     })({viewExtensions: [], compilers: {}});
 
 
@@ -22,13 +24,11 @@ common.opts = {
 };
 
 
-
 common.arrReplace = function(arr, pattern, replacement){
   return arr.map(function(str){
     return str.replace(pattern, replacement);
   });
 };
-
 
 
 // everybody has their own format

@@ -1,4 +1,4 @@
-/*global describe, beforeEach, it */
+/*global describe, before, it */
 'use strict';
 var path = require('path');
 var assert = require('assert');
@@ -38,13 +38,13 @@ var setup = function(config){
         });
       }.bind(this)
     );
-  }
+  };
 };
 
 var expected = function(){
   it('creates expected files', function(){
     helpers.assertFile(this.config.expected);
-  })
+  });
 };
 
 var lint = function(){
@@ -53,7 +53,7 @@ var lint = function(){
       assert.deepEqual(JSON.stringify(errors), '[]');
       done();
     });
-  })
+  });
 };
 
 var baseConfig = function(){
