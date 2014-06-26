@@ -1,4 +1,4 @@
-## Derby 0.6 generator 
+## Derby 0.6 generator [![Build Status](https://travis-ci.org/derbyparty/generator-derby.svg?branch=master)](https://travis-ci.org/derbyparty/generator-derby)
 
 [Yeoman](http://yeoman.io) generator that scaffolds out a [Derby](http://derbyjs.com) 0.6 app.
 

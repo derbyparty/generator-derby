@@ -10,7 +10,7 @@ derby = require 'derby'
 app = require '../src/app'
 
 path = require 'path'<% if (coffee) { %>
-coffeeify = require 'coffeeify' <% } %>
+coffeeify = require 'coffeeify'<% } %>
 
 racerBrowserChannel = require 'racer-browserchannel'
 liveDbMongo = require 'livedb-mongo'
@@ -38,7 +38,8 @@ store = derby.createStore
   db: liveDbMongo mongoUrl + '?auto_reconnect', {safe: true}
   redis: redisClient
 <% } else { %>
-store = derby.createStore db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})
+store = derby.createStore db: liveDbMongo(mongoUrl + '?auto_reconnect', {
+  safe: true})
 <% } %>
 
 derby.use racerBundle
@@ -72,5 +73,7 @@ expressApp = module.exports = express()
     next('404: ' + req.url)
   .use error
 
-app.writeScripts store, publicDir, {<% if (coffee) { %>extensions: ['.coffee']<% } %>}, ->
+app.writeScripts store, publicDir, {<% if (coffee) { %>
+  extensions: ['.coffee']
+<% } %>}, ->
 

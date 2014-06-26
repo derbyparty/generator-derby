@@ -1,15 +1,12 @@
 'use strict';
 
-var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
 var chalk = require('chalk');
 var _ = require('yeoman-generator/lib/actions/string')._;
 
-var Generator = module.exports = yeoman.generators.NamedBase.extend({
+var Generator = yeoman.generators.NamedBase.extend({
   init: function () {
-    var self = this;
     this.config.loadConfig();
     var cfg = this.config.getAll();
 
@@ -24,7 +21,7 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
     
     // add the derby `d-` namespace for standalone components
     this.component = _.slugify(this.name);
-    this.pkgName = (cfg.app ? "" : "d-") + this.component;
+    this.pkgName = (cfg.app ? '' : 'd-') + this.component;
     
     // name the class
     this.className = _.classify(_.slugify(this.name));
@@ -108,13 +105,13 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
     var js = this.coffee ? 'coffee': 'js';
     var html = this.jade ? 'jade': 'html';
     var css = this.stylus ?  'styl': 'css';
-    var src = this.coffee ? "src" : "lib";
+    var src = this.coffee ? 'src' : 'lib';
     
     var name = this.component;
     
     var srcDir = function(p){ return path.join(src, name, p); };
   
-    if(!this.config.get("app")){
+    if(!this.config.get('app')){
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
       this.template('_README.md', 'README.md');
@@ -133,3 +130,6 @@ var Generator = module.exports = yeoman.generators.NamedBase.extend({
     
   }
 });
+
+module.exports = Generator;
+ 
