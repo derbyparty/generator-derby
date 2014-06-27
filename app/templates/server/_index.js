@@ -9,7 +9,6 @@ var derby = require('derby');
 
 var app = require('../src/app');
 
-var path = require('path');
 var coffeeify = require('coffeeify');
 
 var racerBrowserChannel = require('racer-browserchannel');
@@ -35,7 +34,7 @@ store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: 
 <% } %>
 derby.use(racerBundle);
 
-var publicDir = path.join(__dirname, '/../public');
+var publicDir = process.cwd() + '/public';
 
 store.on('bundle', function (browserify) {
 

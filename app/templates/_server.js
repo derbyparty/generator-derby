@@ -1,3 +1,5 @@
+require('coffee-script/register');
+
 var derby = require('derby');
 var http  = require('http');
 var defaults = require('./config/defaults');

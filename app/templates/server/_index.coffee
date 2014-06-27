@@ -8,8 +8,7 @@ cookieParser = require 'cookie-parser'
 derby = require 'derby'
 
 app = require '../src/app'
-
-path = require 'path'<% if (coffee) { %>
+<% if (coffee) { %>
 coffeeify = require 'coffeeify'<% } %>
 
 racerBrowserChannel = require 'racer-browserchannel'
@@ -44,7 +43,7 @@ store = derby.createStore db: liveDbMongo(mongoUrl + '?auto_reconnect', {
 
 derby.use racerBundle
 
-publicDir = path.join __dirname, '/../public'
+publicDir = process.cwd() + '/public'
 <% if (coffee) { %>
 store.on 'bundle', (browserify) ->
 

@@ -20,9 +20,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.config.save();
       
       if (!this.options['skip-install']) {
-        this.installDependencies({callback: function(){
-          self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
-        }});
+        this.installDependencies({
+          'callback': function(){
+            self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
+          }
+        });
       }
     });
 
@@ -68,10 +70,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         value: 'redis',
         checked: false
       },{
-        name: 'Derby-log',
-        value: 'login',
-        checked: false
-      },{
         name: 'Bootstrap 3',
         value: 'bootstrap',
         checked: false
@@ -96,6 +94,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.jade    = hasFeature('jade');
       this.stylus  = hasFeature('stylus');
       this.redis   = hasFeature('redis');
+      this.login   = hasFeature('login');
+      this.schema     = hasFeature('schema');
+      this.bootstrap  = hasFeature('bootstrap');
 
       done();
     }.bind(this));
