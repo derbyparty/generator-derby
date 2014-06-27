@@ -9,7 +9,29 @@ var helpers = require('yeoman-generator').test;
 
 var common = require('./common');
 
-var setup = function(config){
+function runGenerator(context, config, done){
+  context.config = _.merge({
+    args: [],
+    options: {},
+    prompts: {},
+    expected: []
+  }, config);
+
+  context.generator = helpers.createGenerator(
+    context.config.generator,
+    context.config.deps,
+    context.config.args,
+    context.config.options
+  );
+
+  helpers.mockPrompt(context.generator, context.config.prompts);
+
+  context.generator.run({}, function () {
+    done();
+  });
+}
+
+function setup(config){
   return function(done){
     helpers.testDirectory(
       path.join(__dirname, 'temp'),
@@ -18,51 +40,40 @@ var setup = function(config){
           return done(err);
         }
 
-        this.config = _.merge({
-          args: [],
-          options: {},
-          prompts: {},
-          expected: []
-        }, config);
-
-        this.generator = helpers.createGenerator(
-          this.config.generator,
-          this.config.deps,
-          this.config.args,
-          this.config.options
-        );
-
-        helpers.mockPrompt(this.generator, this.config.prompts);
-
-        this.generator.run({}, function () {
-          done();
-        });
+        runGenerator(this, config, done);
       }.bind(this)
     );
   };
-};
+}
 
-var expected = function(){
+function setupSub(config){
+  return function(done){
+    runGenerator(this, config, done);
+  };
+}
+
+function expected(){
   it('creates expected files', function(){
     helpers.assertFile(this.config.expected);
   });
-};
+}
 
-var lint = function(){
+function lint(){
   it('creates well-formed files', function(done){
     common.lint(this.config.expected, function(err, errors){
       assert.deepEqual(JSON.stringify(errors), '[]');
       done();
     });
   });
-};
+}
 
 var base = {
   app: {
     generator: 'derby:app',
     deps: ['../../app'],
     expected: [
-        // add files you expect to exist here.'config/defaults.json',
+        // add files you expect to exist here.
+        'config/defaults.json',
         'server/error.js',
         'server/index.js',
         'src/app/index.js',
@@ -95,6 +106,21 @@ var base = {
       'lib/component-x/component-x.js',
       'lib/component-x/component-x.css',
       'lib/component-x/component-x.html'
+    ],
+    options: common.opts,
+    prompts: {
+      features: []
+    }
+  },
+  subcomponent: {
+    generator: 'derby:component',
+    deps: ['../../component'],
+    args: ['Component X'],
+    expected: [
+      'components/component-x/README.md',
+      'components/component-x/component-x.js',
+      'components/component-x/component-x.css',
+      'components/component-x/component-x.html'
     ],
     options: common.opts,
     prompts: {
@@ -140,13 +166,13 @@ describe('derby app generator', function () {
 });
 
 
-describe('derby component generator', function () {
+describe('derby standalone component generator', function () {
   describe('with baseline config', function () {
     before(setup(base.component));
     expected.call(this);
     lint.call(this);
   });
-  
+
   describe('with `jade`', function () {
     var config = _.extend({}, base.component, {prompts: {features: ['jade']}});
     config.expected = common.arrReplace(config.expected, /\.html$/, '.jade');
@@ -155,7 +181,7 @@ describe('derby component generator', function () {
     expected.call(this);
     lint.call(this);
   });
-  
+
   describe('with `stylus`', function () {
     var config = _.extend({}, base.component,
       {prompts: {features: ['stylus']}});
@@ -175,4 +201,49 @@ describe('derby component generator', function () {
     expected.call(this);
     lint.call(this);
   });
+});
+
+describe('derby subcomponent generator', function () {
+  describe('in a baseline app', function () {
+    before(setup(base.app));
+    describe('a component', function () {
+      before(setupSub(base.subcomponent));
+      expected.call(this);
+      lint.call(this);
+    });
+  });
+
+  describe('in a `jade` app', function(){
+    before(setup(_.merge({}, base.app, {prompts: {features: ['jade']}})));
+    describe('a component', function () {
+      var config = _.merge({}, base.subcomponent);
+      config.expected = common.arrReplace(config.expected, /\.html$/, '.jade');
+      before(setupSub(config));
+      expected.call(this);
+      lint.call(this);
+    });
+  });
+
+  describe('in a `stylus` app', function(){
+    before(setup(_.merge({}, base.app, {prompts: {features: ['stylus']}})));
+    describe('a component', function () {
+      var config = _.merge({}, base.subcomponent);
+      config.expected = common.arrReplace(config.expected, /\.css$/, '.styl');
+      before(setupSub(config));
+      expected.call(this);
+      lint.call(this);
+    });
+  });
+
+  describe('in a `coffee` app', function(){
+    before(setup(_.merge({}, base.app, {options: {coffee: true}})));
+    describe('a component', function () {
+      var config = _.merge({}, base.subcomponent);
+      config.expected = common.arrReplace(config.expected, /\.js$/, '.coffee');
+      before(setupSub(config));
+      expected.call(this);
+      lint.call(this);
+    });
+  });
+
 });
