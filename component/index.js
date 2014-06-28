@@ -15,48 +15,40 @@ var Generator = yeoman.generators.NamedBase.extend({
       type: Boolean,
       defaults: false
     });
-    
+
     // is this already inside an app?
     this.app = cfg.app;
-    
+
     // add the derby `d-` namespace for standalone components
     this.component = _.slugify(this.name);
     this.pkgName = (cfg.app ? '' : 'd-') + this.component;
-    
+
     // name the class
     this.className = _.classify(_.slugify(this.name));
-    
+
     this.coffee = this.options.coffee;
-    
+
     this.email = this.user.git.email;
     this.username = this.user.git.username;
-    
-    this.on('end', function () {
-      // if this was a subcomponent, we are done
-      if(!cfg.app){ return; }
-      
-      this.config.save();
-    });
-
   },
 
   askFor: function () {
     var done = this.async();
     var cfg = this.config.getAll();
-    
+
     this.log(
       chalk.yellow('Derby 0.6 Component Generator for ') +
       chalk.cyan(this.component)
     );
-    
+
     this.log(
       chalk.yellow('The class will be called ') +
       chalk.cyan(this.className)
     );
-    
+
     if(cfg.app){
       this.log(
-        chalk.cyan('I\'ve found an app named ') + 
+        chalk.cyan('I\'ve found an app named ') +
         chalk.yellow(cfg.app)
       );
 
@@ -95,6 +87,14 @@ var Generator = yeoman.generators.NamedBase.extend({
         this.jade    = hasFeature('jade');
         this.stylus  = hasFeature('stylus');
 
+        this.config.defaults({
+          coffee: this.coffee,
+          jade: this.jade,
+          stylus: this.stylus
+        });
+
+        this.config.save();
+
         done();
       }.bind(this));
 
@@ -106,11 +106,11 @@ var Generator = yeoman.generators.NamedBase.extend({
     var html = this.jade ? 'jade': 'html';
     var css = this.stylus ?  'styl': 'css';
     var src = this.coffee ? 'src' : 'lib';
-    
+
     var name = this.component;
-    
+
     var srcDir = function(p){ return path.join(src, name, p); };
-  
+
     if(!this.config.get('app')){
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
@@ -127,9 +127,8 @@ var Generator = yeoman.generators.NamedBase.extend({
     this.template('src/_component.' + js, srcDir(name + '.' + js));
     this.template('src/_component.' + css, srcDir(name + '.' + css));
     this.template('src/_component.' + html, srcDir(name + '.' + html));
-    
+
   }
 });
 
 module.exports = Generator;
- 

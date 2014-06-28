@@ -9,16 +9,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
 
     this.on('end', function () {
-        
-      this.config.defaults({
-        app: this.appname,
-        coffee: this.coffee,
-        stylus: this.stylus,
-        jade: this.jade
-      });
-      
-      this.config.save();
-      
       if (!this.options['skip-install']) {
         this.installDependencies({
           'callback': function(){
@@ -41,7 +31,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       type: Boolean,
       defaults: false
     });
-    
+
     this.coffee = this.options.coffee;
 
     this.email    = this.user.git.email;
@@ -97,6 +87,15 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.login   = hasFeature('login');
       this.schema     = hasFeature('schema');
       this.bootstrap  = hasFeature('bootstrap');
+
+      this.config.defaults({
+        app: this.appname,
+        coffee: this.coffee,
+        stylus: this.stylus,
+        jade: this.jade
+      });
+
+      this.config.save();
 
       done();
     }.bind(this));
