@@ -114,7 +114,7 @@ var Generator = yeoman.generators.NamedBase.extend({
     if(!this.config.get('app')){
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
-      this.template('_README.md', 'README.md');
+//      this.template('_README.md', 'README.md');
 //      this.template('_index.js', 'index.js');
     }else{
       srcDir = function(p){
