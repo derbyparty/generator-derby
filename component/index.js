@@ -105,23 +105,22 @@ var Generator = yeoman.generators.NamedBase.extend({
     var js = this.coffee ? 'coffee': 'js';
     var html = this.jade ? 'jade': 'html';
     var css = this.stylus ?  'styl': 'css';
-    var src = this.coffee ? 'src' : 'lib';
 
     var name = this.component;
 
-    var srcDir = function(p){ return path.join(src, name, p); };
+    var srcDir = function(p){ return path.join('lib', p); };
 
     if(!this.config.get('app')){
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
-//      this.template('_README.md', 'README.md');
+      this.template('_README.md', 'README.md');
 //      this.template('_index.js', 'index.js');
     }else{
       srcDir = function(p){
 //        return path.join('src', 'app', 'components', name, p);
         return path.join('components', name, p);
       };
-      this.template('_README.md', srcDir('README.md'));
+//      this.template('_README.md', srcDir('README.md'));
     }
 //    this.template('src/_index.' + js, srcDir('index.' + js));
     this.template('src/_component.' + js, srcDir(name + '.' + js));

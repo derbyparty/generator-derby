@@ -75,7 +75,9 @@ var base = {
         // add files you expect to exist here.
         'config/defaults.json',
         'server/error.js',
-        'server/index.js',
+        'server/express.js',
+        'server/store.js',
+        'server/routes.js',
         'src/app/index.js',
         'src/error/index.js',
         'views/app/index.html',
@@ -103,9 +105,9 @@ var base = {
     expected: [
       'package.json',
       'README.md',
-      'lib/component-x/component-x.js',
-      'lib/component-x/component-x.css',
-      'lib/component-x/component-x.html'
+      'lib/component-x.js',
+      'lib/component-x.css',
+      'lib/component-x.html'
     ],
     options: common.opts,
     prompts: {
@@ -117,7 +119,7 @@ var base = {
     deps: ['../../component'],
     args: ['Component X'],
     expected: [
-      'components/component-x/README.md',
+//      'components/component-x/README.md',
       'components/component-x/component-x.js',
       'components/component-x/component-x.css',
       'components/component-x/component-x.html'
@@ -195,7 +197,7 @@ describe('derby standalone component generator', function () {
   describe('with `coffee`', function () {
     var config = _.merge({}, base.component, {options: {coffee: true}});
     config.expected = common.arrReplace(config.expected, /\.js$/, '.coffee');
-    config.expected = common.arrReplace(config.expected, /lib\//, 'src/');
+//    config.expected = common.arrReplace(config.expected, /lib\//, 'src/');
 
     before(setup(config));
     expected.call(this);

@@ -1,21 +1,40 @@
 require('coffee-script/register');
 
-var derby = require('derby');
 var http  = require('http');
+var derby = require('derby');
+var express = require('./server/express');
+
+var chalk = require('chalk');
+
+var apps = [
+  require('./src/app')
+];
+
+var error = require('./server/error');
+var publicDir = process.cwd() + '/public';
+
+
 var defaults = require('./config/defaults');
 
 for(var key in defaults) {
   process.env[key] = process.env[key] || defaults[key];
 }
 
-derby.run(createServer);
+derby.run(function(){
+  var store = require('./server/store')(derby);
+  express(store, apps, error, function(expressApp, upgrade){
+    var server = http.createServer(expressApp);
 
-function createServer() {
-  var expressApp = require('./server/index');
+    server.on('upgrade', upgrade);
 
-  http.createServer(expressApp).listen(process.env.PORT, listenCallback);
-}
+    server.listen(process.env.PORT, function() {
+      console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
+    });
 
-function listenCallback(err) {
-  console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
-}
+    apps.forEach(function(app){
+      app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
+        console.log('Bundle created:', chalk.yellow(app.name));
+      });
+    });
+  });
+});

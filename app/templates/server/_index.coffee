@@ -8,8 +8,8 @@ cookieParser = require 'cookie-parser'
 derby = require 'derby'
 
 app = require '../src/app'
-<% if (coffee) { %>
-coffeeify = require 'coffeeify'<% } %>
+
+coffeeify = require 'coffeeify'
 
 racerBrowserChannel = require 'racer-browserchannel'
 liveDbMongo = require 'livedb-mongo'

@@ -1,6 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var crypto = require('crypto');
 
 
 var DerbyGenerator = yeoman.generators.Base.extend({
@@ -36,6 +37,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.email    = this.user.git.email;
     this.username = this.user.git.username;
+
+    this.secret = crypto.randomBytes(20).toString('hex');
+    this.cookie = crypto.randomBytes(20).toString('hex');
   },
 
   askFor: function () {
@@ -63,14 +67,14 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         name: 'Bootstrap 3',
         value: 'bootstrap',
         checked: false
-      },{
-        name: 'Derby-login',
-        value: 'login',
-        checked: false
-      },{
-        name: 'Racer-schema',
-        value: 'schema',
-        checked: false
+//      },{
+//        name: 'Derby-login',
+//        value: 'login',
+//        checked: false
+//      },{
+//        name: 'Racer-schema',
+//        value: 'schema',
+//        checked: false
       }]
     }];
 
@@ -84,9 +88,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.jade    = hasFeature('jade');
       this.stylus  = hasFeature('stylus');
       this.redis   = hasFeature('redis');
-      this.login   = hasFeature('login');
-      this.schema     = hasFeature('schema');
+//      this.login   = hasFeature('login');
+//      this.schema     = hasFeature('schema');
       this.bootstrap  = hasFeature('bootstrap');
+      this.login   = false;
+      this.schema  = false;
 
       this.config.defaults({
         app: this.appname,
@@ -116,7 +122,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.mkdir('public');
     this.mkdir('server');
     this.copy('server/error.'+js, 'server/error.'+js);
-    this.template('server/_index.' + js, 'server/index.'+js);
+    this.copy('server/routes.'+js, 'server/routes.'+js);
+    this.template('server/_express.' + js, 'server/express.'+js);
+    this.template('server/_store.' + js, 'server/store.'+js);
 
     this.mkdir('src');
 

@@ -1,17 +1,33 @@
 derby = require 'derby'
 http  = require 'http'
+express = require './server/express'
+
+chalk = require 'chalk'
+
+apps = [
+  require './src/app'
+]
+
+error = require './server/error'
+publicDir = process.cwd() + '/public'
+
 defaults = require './config/defaults'
 
 for key, value of defaults
   process.env[key] ?= value
 
-listenCallback = (err) ->
-  console.log '%d listening. Go to: http://localhost:%d/',
-    process.pid, process.env.PORT
+derby.run () ->
+  store = require('./server/store')(derby)
+  {expressApp, upgrade} = express store, apps, error
 
-createServer = () ->
-  expressApp = require './server/index'
+  server = http.createServer expressApp
 
-  http.createServer(expressApp).listen process.env.PORT, listenCallback
+  server.on 'upgrade', upgrade
 
-derby.run createServer
+  server.listen process.env.PORT, () ->
+    console.log '%d listening. Go to: http://localhost:%d/',
+      process.pid, process.env.PORT
+
+  apps.forEach (app) ->
+    app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
+      console.log 'Bundle created:', chalk.yellow app.name
