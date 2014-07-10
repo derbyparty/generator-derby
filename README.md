@@ -21,13 +21,13 @@
 
 ### Generators
 
-#### `yo derby:app` (aka `yo derby`)
+#### `yo derby`
 Create a new Derby app.
 
 #### `yo derby:component "Humanish Name"`
 Creates a [Derby component][].
 
-Run inside of an app (created with `yo derby[:app]`), the new component will
+Run inside of an app (created with `yo derby`), the new component will
 be put into `src/app/components/<component-name>`.
 
 Run in an empty directory, the new component will be a new package, ready for
