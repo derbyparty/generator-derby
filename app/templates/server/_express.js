@@ -36,7 +36,7 @@ module.exports = function (store, apps, error, cb){
 
   expressApp.use(require('./routes'));
 
-  expressApp.use(app.router())
+  expressApp
     .all('*', function (req, res, next) { next('404: ' + req.url); })
     .use(error);
 

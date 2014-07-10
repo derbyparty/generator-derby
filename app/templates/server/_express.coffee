@@ -43,7 +43,6 @@ module.exports = (store, apps, error) ->
   expressApp.use require './routes'
 
   expressApp
-    .use app.router()
     .all '*', (req, res, next) -> next '404: ' + req.url
     .use error
 
