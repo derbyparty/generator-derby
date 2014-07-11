@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "derby": "0.6.0-alpha23",
-    "racer": "git://github.com/zag2art/racer#bc2x",
-    "racer-highway": "^1.0",
+    "racer-highway": "~1.1.0",
     "livedb-mongo": "^0.3",<% if (stylus) { %>
     "derby-stylus": "^0.1",<% } %><% if (jade) { %>
     "derby-jade": "^0.6", <% } %><% if (bootstrap) { %>
