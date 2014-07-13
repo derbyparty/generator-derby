@@ -49,4 +49,3 @@ module.exports =
   user:
     id: true
     email: true
-    github: true
