@@ -8,7 +8,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
     var self = this;
     this.pkg = require('../package.json');
-    updateNotifier({packageName: pkg.name, packageVersion: pkg.version}).notify();
+    updateNotifier({packageName: this.pkg.name, packageVersion: this.pkg.version}).notify();
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
