@@ -10,6 +10,7 @@
 * optional Jade
 * optional Stylus
 * optional Redis
+* optional Bootstrap 3
 
 ### Getting Started
 
