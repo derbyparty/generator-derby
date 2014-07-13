@@ -6,7 +6,12 @@ module.exports =
   # passportjs options
   passport:
     successRedirect: '/'
-    failureRedirect: '/'
+    failureRedirect: '/',
+    registerCallback: (req, res, user, done) ->
+      model = req.getModel()
+      $user = model.at "auths.#{user.id}"
+      model.fetch $user, ->
+        $user.set 'email', $user.get('local.email'), done
   strategies:<% if (loginGithub) {%>
     github:
       strategy: require("passport-github").Strategy
