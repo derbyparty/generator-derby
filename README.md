@@ -11,6 +11,7 @@
 * optional Stylus
 * optional Redis
 * optional Bootstrap 3
+* optional [derby-login](https://github.com/derbyparty/derby-login)
 
 ### Getting Started
 
