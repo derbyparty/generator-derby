@@ -2,12 +2,13 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var crypto = require('crypto');
-
+var updateNotifier = require('update-notifier');
 
 var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
     var self = this;
     this.pkg = require('../package.json');
+    updateNotifier({packageName: pkg.name, packageVersion: pkg.version}).notify();
 
     this.on('end', function () {
       if (!this.options['skip-install']) {
