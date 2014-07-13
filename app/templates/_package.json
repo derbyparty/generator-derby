@@ -15,8 +15,12 @@
     "derby-stylus": "^0.1",<% } %><% if (jade) { %>
     "derby-jade": "^0.6", <% } %><% if (bootstrap) { %>
     "d-bootstrap":"*",<% } %><% if (login) { %>
-    "passport-github":"*",
-    "derby-login":"^0.2",<% } %>
+    "derby-login":"^0.2",<% } %><% if (loginGithub) { %>
+    "passport-github":"*",<% } %><% if (loginGoogle) { %>
+    "passport-google-oauth": "*",<% } %><% if (loginLinkedIn) { %>
+    "passport-linkedin": "*",<% } %><% if (loginFacebook) { %>
+    "passport-facebook": "*",<% } %><% if (loginVkontakte) { %>
+    "passport-vkontakte": "*",<% } %>
     "racer-bundle": "^0.1",
     "connect-mongo": "^0.4",<% if (redis) { %>
     "redis":"^0.10",<% } %>

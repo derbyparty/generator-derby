@@ -76,23 +76,61 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 //        value: 'schema',
 //        checked: false
       }]
+    }, {
+      when: function (answers) {
+        return answers.features.indexOf('login') !== -1;
+      },
+      type: 'checkbox',
+      name: 'loginPackages',
+      message: 'Select derby-login packages',
+      choices: [{
+        name: 'GitHub',
+        value: 'loginGithub',
+        checked: false
+      },{
+        name: 'Google',
+        value: 'loginGoogle',
+        checked: false
+      },{
+        name: 'LinkedIn',
+        value: 'loginLinkedIn',
+        checked: false
+      },{
+        name: 'Facebook',
+        value: 'loginFacebook',
+        checked: false
+      },
+        {
+          name: 'Vkontakte',
+          value: 'loginVkontakte',
+          checked: false
+      }]
     }];
 
     this.prompt(prompts, function (answers) {
       var features = answers.features;
+      var login = answers.loginPackages;
 
       function hasFeature(feat) {
         return features && features.indexOf(feat) !== -1;
+      }
+
+      function hasLoginPackage(feat) {
+        return login && login.indexOf(feat) !== -1;
       }
 
       this.jade    = hasFeature('jade');
       this.stylus  = hasFeature('stylus');
       this.redis   = hasFeature('redis');
       this.login   = hasFeature('login');
-//      this.schema     = hasFeature('schema');
       this.bootstrap  = hasFeature('bootstrap');
-//      this.login   = false;
       this.schema  = false;
+
+      this.loginGithub = hasLoginPackage('loginGithub');
+      this.loginGoogle = hasLoginPackage('loginGoogle');
+      this.loginLinkedIn = hasLoginPackage('loginLinkedIn');
+      this.loginFacebook = hasLoginPackage('loginFacebook');
+      this.loginVkontakte = hasLoginPackage('loginVkontakte');
 
       this.config.defaults({
         app: this.appname,
