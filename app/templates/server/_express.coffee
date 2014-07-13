@@ -4,15 +4,17 @@ expressSession = require 'express-session'
 serveStatic = require 'serve-static'
 compression = require 'compression'
 cookieParser = require 'cookie-parser'
-highway = require 'racer-highway'
-
+bodyParser = require 'body-parser'
+highway = require 'racer-highway'<% if (login) { %>
+derbyLogin = require 'derby-login'<% } %>
+<% if (!login) { %>
 createUserId = (req, res, next) ->
   model = req.getModel()
   userId = req.session.userId
   if not userId
     userId = req.session.userId = model.id()
   model.set '_session.userId', userId
-  next()
+  next()<% } %>
 
 module.exports = (store, apps, error) ->
 
@@ -34,9 +36,12 @@ module.exports = (store, apps, error) ->
     .use serveStatic process.cwd() + '/public'
     .use store.modelMiddleware()
     .use cookieParser()
-    .use session
-    .use handlers.middleware
-    .use createUserId
+    .use bodyParser.json()
+    .use bodyParser.urlencoded extended: true
+    .use session<% if (login) { %>
+    .use derbyLogin.middleware store, require '../config/login'<% } %>
+    .use handlers.middleware<% if (!login) { %>
+    .use createUserId<% } %>
 
   apps.forEach (app) -> expressApp.use app.router()
 

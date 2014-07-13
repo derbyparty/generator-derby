@@ -67,10 +67,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         name: 'Bootstrap 3',
         value: 'bootstrap',
         checked: false
-//      },{
-//        name: 'Derby-login',
-//        value: 'login',
-//        checked: false
+      },{
+        name: 'Derby-login',
+        value: 'login',
+        checked: false
 //      },{
 //        name: 'Racer-schema',
 //        value: 'schema',
@@ -88,10 +88,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.jade    = hasFeature('jade');
       this.stylus  = hasFeature('stylus');
       this.redis   = hasFeature('redis');
-//      this.login   = hasFeature('login');
+      this.login   = hasFeature('login');
 //      this.schema     = hasFeature('schema');
       this.bootstrap  = hasFeature('bootstrap');
-      this.login   = false;
+//      this.login   = false;
       this.schema  = false;
 
       this.config.defaults({
@@ -116,6 +116,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.mkdir('config');
     this.template('config/_defaults.json', 'config/defaults.json');
+
+    if (this.login){
+      this.template('config/_login.'+js, 'config/login.'+js);
+    }
 
     this.mkdir('test');
 

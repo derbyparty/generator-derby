@@ -3,8 +3,10 @@ var express = require('express');
 var expressSession = require('express-session');
 var serveStatic = require('serve-static');
 var compression = require('compression');
+var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var highway = require('racer-highway');
+var highway = require('racer-highway');<% if (login) { %>
+var derbyLogin = require('derby-login');<% } %>
 
 module.exports = function (store, apps, error, cb){
 
@@ -26,9 +28,12 @@ module.exports = function (store, apps, error, cb){
     .use(serveStatic(process.cwd() + '/public'))
     .use(store.modelMiddleware())
     .use(cookieParser())
-    .use(session)
-    .use(handlers.middleware)
-    .use(createUserId);
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({extended: true}))
+    .use(session)<% if (login) { %>
+    .use(derbyLogin.middleware(store, require('../config/login')))<% } %>
+    .use(handlers.middleware)<% if (!login) { %>
+    .use(createUserId);<% } %>
 
   apps.forEach(function(app){
     expressApp.use(app.router());
@@ -42,11 +47,11 @@ module.exports = function (store, apps, error, cb){
 
   cb(expressApp, handlers.upgrade);
 }
-
+<% if (login) { %>
 function createUserId(req, res, next) {
   var model = req.getModel();
   var userId = req.session.userId;
   if (!userId) userId = req.session.userId = model.id();
   model.set('_session.userId', userId);
   next();
-}
+}<% } %>
