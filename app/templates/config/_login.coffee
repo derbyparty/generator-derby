@@ -28,7 +28,7 @@ module.exports =
         profileFields: ["id", "first-name", "last-name", "headline", "email-address"]
         params:
           scope: ["r_fullprofile", "r_emailaddress"]<% } %><% if (loginFacebook) {%>
-    facebook: {
+    facebook:
       strategy: require('passport-facebook').Strategy
       conf:
         clientID: '58362219983'
