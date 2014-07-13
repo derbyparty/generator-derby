@@ -4,7 +4,8 @@ app = module.exports = derby.createApp 'app', __filename
 
 global.app = app unless derby.util.isProduction
 <% if (bootstrap) { %>
-app.use require 'd-bootstrap'<% } %><% if (jade) { %>
+app.use require 'd-bootstrap'<% } %><% if (login) { %>
+app.use require 'derby-login/components'<% } %><% if (jade) { %>
 app.serverUse module, 'derby-jade'<% } %><% if (stylus) { %>
 app.serverUse module, 'derby-stylus'<% } %>
 
