@@ -1,6 +1,6 @@
 {
   "name": "generator-derby",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
