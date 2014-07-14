@@ -30,7 +30,7 @@ Create a new Derby app.
 Creates a [Derby component][].
 
 Run inside of an app (created with `yo derby`), the new component will
-be put into `src/app/components/<component-name>`.
+be put into `/components/<component-name>`.
 
 Run in an empty directory, the new component will be a new package, ready for
 publishing to NPM, with the `d-` prefix.
