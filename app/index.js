@@ -76,6 +76,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         name: 'Racer-schema',
         value: 'schema',
         checked: false
+      },{
+        name: 'Bower',
+        value: 'bower',
+        checked: false
       }]
     }, {
       when: function (answers) {
@@ -126,6 +130,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.login   = hasFeature('login');
       this.bootstrap  = hasFeature('bootstrap');
       this.schema  = hasFeature('schema');
+      this.bower = hasFeature('bower');
 
       this.loginGithub = hasLoginPackage('loginGithub');
       this.loginGoogle = hasLoginPackage('loginGoogle');
@@ -205,8 +210,13 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_server.'+js, 'server.'+js);
 
     this.template('_package.json', 'package.json');
-    this.template('_.bowerrc', '.bowerrc');
-    this.template('_bower.json', 'bower.json');
+
+    if (this.bower) {
+      this.mkdir('bower');
+      this.template('_.bowerrc', '.bowerrc');
+      this.template('_bower.json', 'bower.json');
+    }
+
     this.template('_.gitignore', '.gitignore');
     this.template('_README.md', 'README.md');
   },
