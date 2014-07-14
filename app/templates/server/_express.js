@@ -47,7 +47,7 @@ module.exports = function (store, apps, error, cb){
 
   cb(expressApp, handlers.upgrade);
 }
-<% if (login) { %>
+<% if (!login) { %>
 function createUserId(req, res, next) {
   var model = req.getModel();
   var userId = req.session.userId;
