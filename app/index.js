@@ -199,6 +199,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_server.'+js, 'server.'+js);
 
     this.template('_package.json', 'package.json');
+    this.template('_.bowerrc', '.bowerrc');
+    this.template('_bower.json', 'bower.json');
+    this.template('_.gitignore', '.gitignore');
     this.template('_README.md', 'README.md');
   },
 
