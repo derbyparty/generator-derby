@@ -21,7 +21,8 @@
     "passport-linkedin": "*",<% } %><% if (loginFacebook) { %>
     "passport-facebook": "*",<% } %><% if (loginVkontakte) { %>
     "passport-vkontakte": "*",<% } %>
-    "racer-bundle": "^0.1",
+    "racer-bundle": "^0.1",<% if (schema) { %>
+    "racer-schema": "^0.1",<% } %>
     "connect-mongo": "^0.4",<% if (redis) { %>
     "redis":"^0.10",<% } %>
     "coffeeify": "^0.6",

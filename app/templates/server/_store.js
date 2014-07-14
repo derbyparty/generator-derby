@@ -5,7 +5,8 @@ module.exports = store;
 
 function store(derby) {
 
-  derby.use(require('racer-bundle'));
+  derby.use(require('racer-bundle'));<% if (schema) { %>
+  derby.use(require('racer-schema'), require('./schema'));<% } %>
 <% if (redis) { %>
   var redisClient = require('redis').createClient();
   redisClient.select(process.env.REDIS_DB);

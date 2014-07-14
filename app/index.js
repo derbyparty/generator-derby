@@ -72,10 +72,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         name: 'Derby-login',
         value: 'login',
         checked: false
-//      },{
-//        name: 'Racer-schema',
-//        value: 'schema',
-//        checked: false
+      },{
+        name: 'Racer-schema',
+        value: 'schema',
+        checked: false
       }]
     }, {
       when: function (answers) {
@@ -125,7 +125,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.redis   = hasFeature('redis');
       this.login   = hasFeature('login');
       this.bootstrap  = hasFeature('bootstrap');
-      this.schema  = false;
+      this.schema  = hasFeature('schema');
 
       this.loginGithub = hasLoginPackage('loginGithub');
       this.loginGoogle = hasLoginPackage('loginGoogle');
@@ -168,6 +168,12 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.copy('server/routes.'+js, 'server/routes.'+js);
     this.template('server/_express.' + js, 'server/express.'+js);
     this.template('server/_store.' + js, 'server/store.'+js);
+
+    if (this.schema) {
+      this.mkdir('server/model');
+      this.copy('server/schema.'+js, 'server/schema.'+js);
+      this.copy('server/model/products.'+js, 'server/model/products.'+js);
+    }
 
     this.mkdir('src');
 
