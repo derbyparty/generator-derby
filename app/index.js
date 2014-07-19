@@ -53,31 +53,31 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       name: 'features',
       message: 'Select features',
       choices: [{
-        name: 'Jade',
+        name: 'Jade', //app level
         value: 'jade',
         checked: true
       },{
-        name: 'Stylus',
+        name: 'Stylus', //app level
         value: 'stylus',
         checked: true
       },{
-        name: 'Redis',
+        name: 'Redis', //proj level
         value: 'redis',
         checked: false
       },{
-        name: 'Bootstrap 3',
+        name: 'Bootstrap 3', //app level
         value: 'bootstrap',
         checked: false
       },{
-        name: 'Derby-login',
+        name: 'Derby-login', //proj level / app level
         value: 'login',
         checked: false
       },{
-        name: 'Racer-schema',
+        name: 'Racer-schema', //proj level
         value: 'schema',
         checked: false
       },{
-        name: 'Bower',
+        name: 'Bower', //proj level
         value: 'bower',
         checked: false
       }]
@@ -151,10 +151,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  app: function () {
+  project: function () {
     var js    = this.coffee ? 'coffee': 'js';
-    var html  = this.jade ? 'jade': 'html';
-    var css   = this.stylus?  'styl': 'css';
 
     this.mkdir('components');
 
@@ -182,30 +180,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.mkdir('src');
 
-    this.mkdir('src/app');
-    this.template('src/app/_index.' + js, 'src/app/index.'+js);
-
-    this.mkdir('src/error');
-    this.template('src/error/_index.' + js, 'src/error/index.'+js);
-
     this.mkdir('views');
-    this.mkdir('views/app');
-    this.copy('views/app/index.'+html, 'views/app/index.'+html);
-    this.copy('views/app/home.'+html, 'views/app/home.'+html);
-
-    this.mkdir('views/error');
-    this.copy('views/error/index.'+html, 'views/error/index.'+html);
-    this.copy('views/error/403.'+html, 'views/error/403.'+html);
-    this.copy('views/error/404.'+html, 'views/error/404.'+html);
-    this.copy('views/error/500.'+html, 'views/error/500.'+html);
-
-
-    this.mkdir('styles');
-    this.mkdir('styles/app');
-    this.copy('styles/app/index.'+css, 'styles/app/index.'+css);
-    this.mkdir('styles/error');
-    this.copy('styles/error/index.'+css, 'styles/error/index.'+css);
-    this.copy('styles/error/reset.'+css, 'styles/error/reset.'+css);
 
     this.template('_server.'+js, 'server.'+js);
 
@@ -221,10 +196,44 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_README.md', 'README.md');
   },
 
-  projectfiles: function () {
-//    this.copy('editorconfig', '.editorconfig');
-//    this.copy('jshintrc', '.jshintrc');
+  err: function(){
+    var js    = this.coffee ? 'coffee': 'js';
+    var html  = this.jade ? 'jade': 'html';
+    var css   = this.stylus?  'styl': 'css';
+
+    this.mkdir('src/error');
+    this.template('src/error/_index.' + js, 'src/error/index.'+js);
+
+    this.mkdir('views/error');
+    this.copy('views/error/index.'+html, 'views/error/index.'+html);
+    this.copy('views/error/403.'+html, 'views/error/403.'+html);
+    this.copy('views/error/404.'+html, 'views/error/404.'+html);
+    this.copy('views/error/500.'+html, 'views/error/500.'+html);
+
+
+    this.mkdir('styles');
+    this.mkdir('styles/error');
+    this.copy('styles/error/index.'+css, 'styles/error/index.'+css);
+    this.copy('styles/error/reset.'+css, 'styles/error/reset.'+css);
+
+  },
+  app: function () {
+    var js    = this.coffee ? 'coffee': 'js';
+    var html  = this.jade ? 'jade': 'html';
+    var css   = this.stylus?  'styl': 'css';
+
+    this.mkdir('src/app');
+    this.template('src/app/_index.' + js, 'src/app/index.'+js);
+
+    this.mkdir('views/app');
+    this.copy('views/app/index.'+html, 'views/app/index.'+html);
+    this.copy('views/app/home.'+html, 'views/app/home.'+html);
+
+    this.mkdir('styles/app');
+    this.copy('styles/app/index.'+css, 'styles/app/index.'+css);
+
   }
+
 });
 
 module.exports = DerbyGenerator;
