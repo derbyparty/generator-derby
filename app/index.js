@@ -224,7 +224,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
 
       this.config.defaults({
-        app: this.appname,
+        project: this.appname,
         coffee: this.coffee,
         stylus: this.stylus,
         jade: this.jade

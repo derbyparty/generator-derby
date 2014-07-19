@@ -17,11 +17,11 @@ var Generator = yeoman.generators.NamedBase.extend({
     });
 
     // is this already inside an app?
-    this.app = cfg.app;
+    this.project = cfg.project;
 
     // add the derby `d-` namespace for standalone components
     this.component = _.slugify(this.name);
-    this.pkgName = (cfg.app ? '' : 'd-') + this.component;
+    this.pkgName = (cfg.project ? '' : 'd-') + this.component;
 
     // name the class
     this.className = _.classify(_.slugify(this.name));
@@ -46,10 +46,10 @@ var Generator = yeoman.generators.NamedBase.extend({
       chalk.cyan(this.className)
     );
 
-    if(cfg.app){
+    if(cfg.project){
       this.log(
-        chalk.cyan('I\'ve found an app named ') +
-        chalk.yellow(cfg.app)
+        chalk.cyan('I\'ve found Derby project named ') +
+        chalk.yellow(cfg.project)
       );
 
       this.coffee = cfg.coffee;
@@ -110,7 +110,7 @@ var Generator = yeoman.generators.NamedBase.extend({
 
     var srcDir = function(p){ return path.join('lib', p); };
 
-    if(!this.config.get('app')){
+    if(!this.config.get('project')){
       this.template('_package.json', 'package.json');
       this.template('_bower.json', 'bower.json');
       this.template('_README.md', 'README.md');
