@@ -43,7 +43,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.cookie = crypto.randomBytes(20).toString('hex');
   },
 
-  askFor: function () {
+  askForProject: function () {
     var done = this.async();
 
     this.log('Derby 0.6 App generator:\n');
@@ -51,7 +51,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'checkbox',
       name: 'features',
-      message: 'Select features',
+      message: 'Select project features',
       choices: [{
         name: 'Jade', //app level
         value: 'jade',
@@ -138,15 +138,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.loginFacebook = hasLoginPackage('loginFacebook');
       this.loginVkontakte = hasLoginPackage('loginVkontakte');
 
-      this.config.defaults({
-        app: this.appname,
-        coffee: this.coffee,
-        stylus: this.stylus,
-        jade: this.jade
-      });
-
-      this.config.save();
-
       done();
     }.bind(this));
   },
@@ -194,6 +185,56 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.template('_.gitignore', '.gitignore');
     this.template('_README.md', 'README.md');
+  },
+
+  askForApp: function(){
+    var done = this.async();
+
+    this.log('Derby 0.6 App generator:\n');
+
+    var prompts = [{
+      type: 'checkbox',
+      name: 'features',
+      message: 'Select app features',
+      choices: [{
+        name: 'Jade', //app level
+        value: 'jade',
+        checked: true
+      },{
+        name: 'Stylus', //app level
+        value: 'stylus',
+        checked: true
+      },{
+        name: 'Bootstrap 3', //app level
+        value: 'bootstrap',
+        checked: false
+      }]
+    }];
+
+    this.prompt(prompts, function (answers) {
+      var features = answers.features;
+
+      function hasFeature(feat) {
+        return features && features.indexOf(feat) !== -1;
+      }
+
+      this.jade    = hasFeature('jade');
+      this.stylus  = hasFeature('stylus');
+      this.bootstrap  = hasFeature('bootstrap');
+
+
+      this.config.defaults({
+        app: this.appname,
+        coffee: this.coffee,
+        stylus: this.stylus,
+        jade: this.jade
+      });
+
+      this.config.save();
+
+      done();
+    }.bind(this));
+
   },
 
   err: function(){
