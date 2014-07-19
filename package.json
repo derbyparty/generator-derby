@@ -4,7 +4,13 @@
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "zag2art/generator-derby",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/derbyparty/generator-derby.git"
+  },
+  "bugs": {
+    "url": "https://github.com/derbyparty/generator-derby/issues"
+  },
   "author": {
     "name": "Artur Zayats",
     "email": "zag2art@gmail.com",
