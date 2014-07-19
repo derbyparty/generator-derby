@@ -12,6 +12,8 @@
 * optional Redis
 * optional Bootstrap 3
 * optional [derby-login](https://github.com/derbyparty/derby-login)
+* optional [racer-schema](https://github.com/derbyparty/racer-schema)
+* optional [bower](http://bower.io/) settings files
 
 ### Getting Started
 
