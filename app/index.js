@@ -8,6 +8,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
     var self = this;
     this.pkg = require('../package.json');
+
     updateNotifier({packageName: this.pkg.name, packageVersion: this.pkg.version}).notify();
 
     this.on('end', function () {
@@ -46,27 +47,15 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   askForProject: function () {
     var done = this.async();
 
-    this.log('Derby 0.6 App generator:\n');
+    this.log('Derby 0.6 Project generator:\n');
 
     var prompts = [{
       type: 'checkbox',
       name: 'features',
-      message: 'Select project features',
+      message: 'Select Project level features',
       choices: [{
-        name: 'Jade', //app level
-        value: 'jade',
-        checked: true
-      },{
-        name: 'Stylus', //app level
-        value: 'stylus',
-        checked: true
-      },{
         name: 'Redis', //proj level
         value: 'redis',
-        checked: false
-      },{
-        name: 'Bootstrap 3', //app level
-        value: 'bootstrap',
         checked: false
       },{
         name: 'Derby-login', //proj level / app level
@@ -124,11 +113,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         return login && login.indexOf(feat) !== -1;
       }
 
-      this.jade    = hasFeature('jade');
-      this.stylus  = hasFeature('stylus');
       this.redis   = hasFeature('redis');
       this.login   = hasFeature('login');
-      this.bootstrap  = hasFeature('bootstrap');
       this.schema  = hasFeature('schema');
       this.bower = hasFeature('bower');
 
@@ -142,6 +128,74 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
+  askForApp: function(){
+    var done = this.async();
+
+    var prompts = [{
+      type: 'input',
+      message: 'Input Derby-app name',
+      default: 'app',
+      name: 'app'
+    }];
+
+    this.prompt(prompts, function (answers) {
+
+      this.app = answers.app;
+
+      var prompts = [{
+        type: 'checkbox',
+        name: 'features',
+        message: 'Select "' + chalk.yellow(this.app)+'"-application features',
+        choices: [{
+          name: 'Jade', //app level
+          value: 'jade',
+          checked: true
+        },{
+          name: 'Stylus', //app level
+          value: 'stylus',
+          checked: true
+        },{
+          name: 'Bootstrap 3', //app level
+          value: 'bootstrap',
+          checked: false
+        }]
+      }];
+
+      this.prompt(prompts, function (answers) {
+
+        function hasFeature(feat) {
+          return features && features.indexOf(feat) !== -1;
+        }
+
+        var features = answers.features;
+
+        this.jade    = hasFeature('jade');
+        this.stylus  = hasFeature('stylus');
+        this.bootstrap  = hasFeature('bootstrap');
+
+        this.config.defaults({
+          project: this.appname,
+          coffee: this.coffee,
+          stylus: this.stylus,
+          jade: this.jade
+        });
+
+        this.config.save();
+
+        done();
+
+
+      }.bind(this));
+
+
+
+    }.bind(this));
+
+
+
+  },
+
+  // Project generation
   project: function () {
     var js    = this.coffee ? 'coffee': 'js';
 
@@ -187,56 +241,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_README.md', 'README.md');
   },
 
-  askForApp: function(){
-    var done = this.async();
-
-    this.log('Derby 0.6 App generator:\n');
-
-    var prompts = [{
-      type: 'checkbox',
-      name: 'features',
-      message: 'Select app features',
-      choices: [{
-        name: 'Jade', //app level
-        value: 'jade',
-        checked: true
-      },{
-        name: 'Stylus', //app level
-        value: 'stylus',
-        checked: true
-      },{
-        name: 'Bootstrap 3', //app level
-        value: 'bootstrap',
-        checked: false
-      }]
-    }];
-
-    this.prompt(prompts, function (answers) {
-      var features = answers.features;
-
-      function hasFeature(feat) {
-        return features && features.indexOf(feat) !== -1;
-      }
-
-      this.jade    = hasFeature('jade');
-      this.stylus  = hasFeature('stylus');
-      this.bootstrap  = hasFeature('bootstrap');
-
-
-      this.config.defaults({
-        project: this.appname,
-        coffee: this.coffee,
-        stylus: this.stylus,
-        jade: this.jade
-      });
-
-      this.config.save();
-
-      done();
-    }.bind(this));
-
-  },
-
+  // Error-app generation
   err: function(){
     var js    = this.coffee ? 'coffee': 'js';
     var html  = this.jade ? 'jade': 'html';
@@ -258,6 +263,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.copy('styles/error/reset.'+css, 'styles/error/reset.'+css);
 
   },
+  // App generation
   app: function () {
     var js    = this.coffee ? 'coffee': 'js';
     var html  = this.jade ? 'jade': 'html';
