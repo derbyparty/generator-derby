@@ -1,13 +1,10 @@
 {
   "name": "generator-derby",
   "version": "0.3.6",
-  "description": "Yeoman generator",
+  "description": "Yeoman generator for Derby 0.6 projects",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/derbyparty/generator-derby.git"
-  },
+  "repository": "yeoman/generator-derby",
   "bugs": {
     "url": "https://github.com/derbyparty/generator-derby/issues"
   },

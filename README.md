@@ -1,6 +1,6 @@
 ## Derby 0.6 generator [![Build Status](https://travis-ci.org/derbyparty/generator-derby.svg?branch=master)](https://travis-ci.org/derbyparty/generator-derby)
 
-[Yeoman](http://yeoman.io) generator that scaffolds out a [Derby](http://derbyjs.com) 0.6 app.
+[Yeoman](http://yeoman.io) generator that scaffolds out a [Derby](http://derbyjs.com) 0.6 projects.
 
 ### Features
 
@@ -19,19 +19,19 @@
 
 - Install: `npm install -g yo`
 - Install: `npm install -g generator-derby`
-- Make app dir: `mkdir myapp`
-- Go into the dir: `cd myapp`
+- Make a project dir: `mkdir myproject`
+- Go into the dir: `cd myproject`
 - Run: `yo derby` or `yo derby --coffee`
 
 ### Generators
 
 #### `yo derby`
-Create a new Derby app.
+Create a new Derby project.
 
 #### `yo derby:component "Humanish Name"`
 Creates a [Derby component][].
 
-Run inside of an app (created with `yo derby`), the new component will
+Run inside of an project (created with `yo derby`), the new component will
 be put into `/components/<component-name>`.
 
 Run in an empty directory, the new component will be a new package, ready for

@@ -155,6 +155,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
           value: 'stylus',
           checked: true
         },{
+          name: 'Markdown', //app level
+          value: 'md',
+          checked: true
+        },{
           name: 'Bootstrap 3', //app level
           value: 'bootstrap',
           checked: false
@@ -171,6 +175,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
         this.jade    = hasFeature('jade');
         this.stylus  = hasFeature('stylus');
+        this.md  = hasFeature('md');
         this.bootstrap  = hasFeature('bootstrap');
 
         this.config.defaults({
