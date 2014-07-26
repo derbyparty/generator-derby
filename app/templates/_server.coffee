@@ -24,10 +24,13 @@ derby.run () ->
 
   server.on 'upgrade', upgrade
 
-  server.listen process.env.PORT, () ->
-    console.log '%d listening. Go to: http://localhost:%d/',
-      process.pid, process.env.PORT
-
+  writed = 0
   apps.forEach (app) ->
     app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
       console.log 'Bundle created:', chalk.yellow app.name
+
+      writed++
+      if writed == apps.length
+        server.listen process.env.PORT, () ->
+          console.log '%d listening. Go to: http://localhost:%d/',
+            process.pid, process.env.PORT
