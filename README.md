@@ -9,8 +9,9 @@
 * Pure JavaScript/CoffeeScript
 * optional Jade
 * optional Stylus
-* optional Redis
+* optional Markdown
 * optional Bootstrap 3
+* optional Redis
 * optional [derby-login](https://github.com/derbyparty/derby-login)
 * optional [racer-schema](https://github.com/derbyparty/racer-schema)
 * optional [bower](http://bower.io/) settings files
