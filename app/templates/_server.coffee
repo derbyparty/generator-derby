@@ -5,7 +5,7 @@ express = require './server/express'
 chalk = require 'chalk'
 
 apps = [
-  require './src/app'
+  require './apps/<%= app %>'
 ]
 
 error = require './server/error'

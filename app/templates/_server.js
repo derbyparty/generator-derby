@@ -7,7 +7,7 @@ var express = require('./server/express');
 var chalk = require('chalk');
 
 var apps = [
-  require('./src/app')
+  require('./apps/<%= app %>')
 ];
 
 var error = require('./server/error');

@@ -13,7 +13,7 @@ function runGenerator(context, config, done){
   context.config = _.merge({
     args: [],
     options: {},
-    prompts: {},
+    prompts: {app: 'app'},
     expected: []
   }, config);
 
@@ -78,17 +78,17 @@ var base = {
         'server/express.js',
         'server/store.js',
         'server/routes.js',
-        'src/app/index.js',
-        'src/error/index.js',
-        'views/app/index.html',
-        'views/app/home.html',
-        'views/error/index.html',
-        'views/error/403.html',
-        'views/error/404.html',
-        'views/error/500.html',
-        'styles/app/index.css',
-        'styles/error/index.css',
-        'styles/error/reset.css',
+        'apps/app/index.js',
+        'apps/error/index.js',
+        'apps/app/views/index.html',
+        'apps/app/views/home.html',
+        'apps/error/views/index.html',
+        'apps/error/views/403.html',
+        'apps/error/views/404.html',
+        'apps/error/views/500.html',
+        'apps/app/styles/index.css',
+        'apps/error/styles/index.css',
+        'apps/error/styles/reset.css',
         'server.js',
         'package.json',
         'README.md'

@@ -10,8 +10,8 @@ app.serverUse(module,'derby-jade');<% } %><% if (stylus) { %>
 app.serverUse(module, 'derby-stylus');<% } %><% if (md) { %>
 app.serverUse(module, 'derby-markdown');<% } %>
 
-app.loadViews(__dirname + '/../../views/app');
-app.loadStyles(__dirname + '/../../styles/app');
+app.loadViews(__dirname + '/views');
+app.loadStyles(__dirname + '/styles');
 
 app.get('/', function(page){
   page.render('home');

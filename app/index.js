@@ -157,7 +157,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         },{
           name: 'Markdown', //app level
           value: 'md',
-          checked: true
+          checked: false
         },{
           name: 'Bootstrap 3', //app level
           value: 'bootstrap',
@@ -173,31 +173,26 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
         var features = answers.features;
 
-        this.jade    = hasFeature('jade');
-        this.stylus  = hasFeature('stylus');
-        this.md  = hasFeature('md');
+        this.jade       = hasFeature('jade');
+        this.stylus     = hasFeature('stylus');
+        this.md         = hasFeature('md');
         this.bootstrap  = hasFeature('bootstrap');
 
         this.config.defaults({
           project: this.appname,
+          app: this.app,
           coffee: this.coffee,
           stylus: this.stylus,
-          jade: this.jade
+          jade: this.jade,
+          md: this.md
         });
 
         this.config.save();
 
         done();
 
-
       }.bind(this));
-
-
-
     }.bind(this));
-
-
-
   },
 
   // Project generation
@@ -228,7 +223,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.copy('server/model/products.'+js, 'server/model/products.'+js);
     }
 
-    this.mkdir('src');
+    this.mkdir('apps');
 
     this.mkdir('views');
 
@@ -237,7 +232,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_package.json', 'package.json');
 
     if (this.bower) {
-      this.mkdir('bower');
+      this.mkdir('bower_components');
       this.template('_.bowerrc', '.bowerrc');
       this.template('_bower.json', 'bower.json');
     }
@@ -252,20 +247,19 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var html  = this.jade ? 'jade': 'html';
     var css   = this.stylus?  'styl': 'css';
 
-    this.mkdir('src/error');
-    this.template('src/error/_index.' + js, 'src/error/index.'+js);
+    this.mkdir('apps/error');
+    this.template('apps/error/_index.' + js, 'apps/error/index.'+js);
 
-    this.mkdir('views/error');
-    this.copy('views/error/index.'+html, 'views/error/index.'+html);
-    this.copy('views/error/403.'+html, 'views/error/403.'+html);
-    this.copy('views/error/404.'+html, 'views/error/404.'+html);
-    this.copy('views/error/500.'+html, 'views/error/500.'+html);
+    this.mkdir('apps/error/views');
+    this.copy('apps/error/views/index.'+html, 'apps/error/views/index.'+html);
+    this.copy('apps/error/views/403.'+html, 'apps/error/views/403.'+html);
+    this.copy('apps/error/views/404.'+html, 'apps/error/views/404.'+html);
+    this.copy('apps/error/views/500.'+html, 'apps/error/views/500.'+html);
 
 
-    this.mkdir('styles');
-    this.mkdir('styles/error');
-    this.copy('styles/error/index.'+css, 'styles/error/index.'+css);
-    this.copy('styles/error/reset.'+css, 'styles/error/reset.'+css);
+    this.mkdir('apps/error/styles');
+    this.copy('apps/error/styles/index.'+css, 'apps/error/styles/index.'+css);
+    this.copy('apps/error/styles/reset.'+css, 'apps/error/styles/reset.'+css);
 
   },
   // App generation
@@ -274,16 +268,17 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     var html  = this.jade ? 'jade': 'html';
     var css   = this.stylus?  'styl': 'css';
 
-    this.mkdir('src/app');
-    this.template('src/app/_index.' + js, 'src/app/index.'+js);
+    var appPath = 'apps/'+this.app;
 
-    this.mkdir('views/app');
-    this.copy('views/app/index.'+html, 'views/app/index.'+html);
-    this.copy('views/app/home.'+html, 'views/app/home.'+html);
+    this.mkdir(appPath);
+    this.template( 'apps/app/_index.' + js, appPath + '/index.'+js);
 
-    this.mkdir('styles/app');
-    this.copy('styles/app/index.'+css, 'styles/app/index.'+css);
+    this.mkdir(appPath + '/views');
+    this.copy('apps/app/views/index.'+html, appPath + '/views/index.'+html);
+    this.copy('apps/app/views/home.'+html, appPath + '/views/home.'+html);
 
+    this.mkdir(appPath + '/styles');
+    this.copy('apps/app/styles/index.'+css, appPath + '/styles/index.'+css);
   }
 
 });

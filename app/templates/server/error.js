@@ -1,4 +1,4 @@
-var errorApp = require('../src/error');
+var errorApp = require('../apps/error');
 
 module.exports = function (err, req, res, next) {
   if (!err) return next();
