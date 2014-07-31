@@ -1,26 +1,27 @@
-require('coffee-script/register');
-
-var http  = require('http');
 var derby = require('derby');
-var express = require('./server/express');
-
-var chalk = require('chalk');
-
-var apps = [
-  require('./apps/<%= app %>')
-];
-
-var error = require('./server/error');
-var publicDir = process.cwd() + '/public';
-
-
-var defaults = require('./config/defaults');
-
-for(var key in defaults) {
-  process.env[key] = process.env[key] || defaults[key];
-}
 
 derby.run(function(){
+  require('coffee-script/register');
+
+  var http  = require('http');
+  var chalk = require('chalk');
+
+  var publicDir = process.cwd() + '/public';
+
+  var apps = [
+    require('./apps/<%= app %>')
+  ];
+
+  // Config
+  var defaults = require('./config/defaults');
+
+  for(var key in defaults) {
+    process.env[key] = process.env[key] || defaults[key];
+  }
+
+  var express = require('./server/express');
+  var error = require('./server/error');
+
   var store = require('./server/store')(derby);
   express(store, apps, error, function(expressApp, upgrade){
     var server = http.createServer(expressApp);

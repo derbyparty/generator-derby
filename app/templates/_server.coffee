@@ -1,22 +1,24 @@
 derby = require 'derby'
-http  = require 'http'
-express = require './server/express'
-
-chalk = require 'chalk'
-
-apps = [
-  require './apps/<%= app %>'
-]
-
-error = require './server/error'
-publicDir = process.cwd() + '/public'
-
-defaults = require './config/defaults'
-
-for key, value of defaults
-  process.env[key] ?= value
 
 derby.run () ->
+  http  = require 'http'
+  chalk = require 'chalk'
+
+  publicDir = process.cwd() + '/public'
+
+  apps = [
+    require './apps/<%= app %>'
+  ]
+
+  express = require './server/express'
+  error = require './server/error'
+
+  # Config
+  defaults = require './config/defaults'
+
+  for key, value of defaults
+    process.env[key] ?= value
+
   store = require('./server/store')(derby)
   {expressApp, upgrade} = express store, apps, error
 
