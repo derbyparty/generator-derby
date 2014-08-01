@@ -27,14 +27,18 @@ derby.run(function(){
     var server = http.createServer(expressApp);
 
     server.on('upgrade', upgrade);
-
-    server.listen(process.env.PORT, function() {
-      console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
-    });
-
+    
+    var writed = 0;
     apps.forEach(function(app){
       app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
         console.log('Bundle created:', chalk.yellow(app.name));
+        
+        writed++;
+        if (writed == apps.length) {
+          server.listen(process.env.PORT, function() {
+            console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
+          });
+        }
       });
     });
   });
