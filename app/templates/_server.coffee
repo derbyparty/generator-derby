@@ -1,3 +1,4 @@
+async = require 'async'
 derby = require 'derby'
 
 derby.run () ->
@@ -26,10 +27,14 @@ derby.run () ->
 
   server.on 'upgrade', upgrade
 
-  server.listen process.env.PORT, () ->
-    console.log '%d listening. Go to: http://localhost:%d/',
-      process.pid, process.env.PORT
-
+  jobs = []
   apps.forEach (app) ->
-    app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
-      console.log 'Bundle created:', chalk.yellow app.name
+    jobs.push (cbk)->
+      app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
+        console.log 'Bundle created:', chalk.yellow app.name
+        cbk()
+
+  async.parallel jobs, ()->
+    server.listen process.env.PORT, () ->
+      console.log '%d listening. Go to: http://localhost:%d/',
+        process.pid, process.env.PORT
