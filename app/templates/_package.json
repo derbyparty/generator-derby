@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "async": "0.9.0",
     "derby": "0.6.0-alpha23",
     "racer-highway": "~1.3.0",
     "livedb-mongo": "^0.3",<% if (stylus) { %>

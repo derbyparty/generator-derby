@@ -1,3 +1,4 @@
+var async = require('async');
 var derby = require('derby');
 
 derby.run(function(){
@@ -28,13 +29,18 @@ derby.run(function(){
 
     server.on('upgrade', upgrade);
 
-    server.listen(process.env.PORT, function() {
-      console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
-    });
-
+    var jobs = [];
     apps.forEach(function(app){
-      app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
-        console.log('Bundle created:', chalk.yellow(app.name));
+      jobs.push(function (cbk) {
+        app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
+          console.log('Bundle created:', chalk.yellow(app.name));
+          cbk();
+        });
+      });
+    });
+    async.parallel(jobs, function () {
+      server.listen(process.env.PORT, function() {
+        console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
       });
     });
   });
