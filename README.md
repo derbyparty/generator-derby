@@ -29,16 +29,16 @@
 #### `yo derby`
 Create a new Derby project.
 
-#### `yo derby:component "Humanish Name"`
-Creates a [Derby component][].
+#### `yo derby:component component-name
+Creates a [Derby component][] inside current folder.
 
-Run inside of an project (created with `yo derby`), the new component will
+Run inside of an project (created with `yo derby`) in the `/components/` folder, the new component will
 be put into `/components/<component-name>`.
 
-Run in an empty directory, the new component will be a new package, ready for
-publishing to NPM, with the `d-` prefix.
+Run with name started with `d-` prefix, the new component will be a new package, ready for
+publishing to NPM.
 
-The package and class name will be derived from the humanish name.
+The package and class name will be derived from the dashed name, f.e `d-new-comp`.
 
 ### Options
 

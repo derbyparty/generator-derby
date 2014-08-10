@@ -1,11 +1,11 @@
 {
-  "name": "<%= pkgName %>",
+  "name": "<%= component %>",
   "description": "",
   "version": "0.0.0",
-  "main": "./lib/<%= component %>.<% if (coffee) {%>coffee<% } else {%>js<% } %>",
+  "main": "./index.<% if (coffee) {%>coffee<% } else {%>js<% } %>",
   "keywords": [
     "derby",
-    "component"
+    "derby-component"
   ],
   "scripts": {
     "test": "echo 'No tests yet!'; exit(1);"

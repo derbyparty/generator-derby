@@ -1,9 +1,11 @@
-path = require "path"
+module.exports = <%= className %>
 
-module.exports = class <%= className %>
-  view: path.join __dirname, "<%= component %>"
-  style: path.join __dirname, "<%= component %>"
+class <%= className %>
 
-  init: (model) ->
+  view:  __dirname<% if (!standalone) { %> + '/<%= component %>'<% } %>
+  style: __dirname<% if (!standalone) { %> + '/<%= component %>'<% } %>
+  name: '<%= component %>'
 
-  create: (model, dom) ->
+  init: ->
+
+  create: ->

@@ -1,6 +1,6 @@
 'use strict';
 
-var path = require('path');
+//var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var _ = require('yeoman-generator/lib/actions/string')._;
@@ -8,7 +8,13 @@ var _ = require('yeoman-generator/lib/actions/string')._;
 var Generator = yeoman.generators.NamedBase.extend({
   init: function () {
     this.config.loadConfig();
-    var cfg = this.config.getAll();
+    this.cfg = this.config.getAll();
+
+//    console.log('generator', this.env.cwd);
+//    console.log('generator', this.cfg);
+
+    this.destinationRoot(this.env.cwd);
+//    console.log('options', this.options);
 
     this.option('coffee', {
       desc: 'Use CoffeeScript',
@@ -16,17 +22,14 @@ var Generator = yeoman.generators.NamedBase.extend({
       defaults: false
     });
 
-    // is this already inside an app?
-    this.project = cfg.project;
+    this.coffee = this.options.coffee;
 
-    // add the derby `d-` namespace for standalone components
-    this.component = _.slugify(this.name);
-    this.pkgName = (cfg.project ? '' : 'd-') + this.component;
+    this.component = this.name;
+
+    this.standalone = this.name.indexOf('d-') === 0;
 
     // name the class
-    this.className = _.classify(_.slugify(this.name));
-
-    this.coffee = this.options.coffee;
+    this.className = _.classify(this.standalone ? this.name.slice(2) : this.name);
 
     this.email = this.user.git.email;
     this.username = this.user.git.username;
@@ -34,7 +37,6 @@ var Generator = yeoman.generators.NamedBase.extend({
 
   askFor: function () {
     var done = this.async();
-    var cfg = this.config.getAll();
 
     this.log(
       chalk.yellow('Derby 0.6 Component Generator for ') +
@@ -46,59 +48,61 @@ var Generator = yeoman.generators.NamedBase.extend({
       chalk.cyan(this.className)
     );
 
-    if(cfg.project){
+    if(this.cfg.project){
       this.log(
         chalk.cyan('I\'ve found Derby project named ') +
-        chalk.yellow(cfg.project)
+        chalk.yellow(this.cfg.project)
       );
 
-      this.coffee = cfg.coffee;
-      this.jade   = cfg.jade;
-      this.stylus = cfg.stylus;
+      if (typeof this.coffee === 'undefined') {
+        this.coffee = this.cfg.coffee;
+      }
 
-      done();
-    }else{
+      this.jade   = this.cfg.jade;
+      this.stylus = this.cfg.stylus;
 
-      var prompts = [{
-        type: 'checkbox',
-        name: 'features',
-        message: 'Select preprocessors',
-        choices: [
-          {
-            name: 'Jade (HTML)',
-            value: 'jade',
-            checked: true
-          },
-          {
-            name: 'Stylus (CSS)',
-            value: 'stylus',
-            checked: true
-          }
-        ]
-      }];
-
-      this.prompt(prompts, function (answers) {
-        var features = answers.features || [];
-
-        function hasFeature(feat) {
-          return features && features.indexOf(feat) !== -1;
-        }
-
-        this.jade    = hasFeature('jade');
-        this.stylus  = hasFeature('stylus');
-
-        this.config.defaults({
-          coffee: this.coffee,
-          jade: this.jade,
-          stylus: this.stylus
-        });
-
-        this.config.save();
-
-        done();
-      }.bind(this));
+      return done();
 
     }
+
+    var prompts = [{
+      type: 'checkbox',
+      name: 'features',
+      message: 'Select preprocessors',
+      choices: [{
+          name: 'Jade (HTML)',
+          value: 'jade',
+          checked: true
+        },{
+          name: 'Stylus (CSS)',
+          value: 'stylus',
+          checked: true
+        }
+      ]
+    }];
+
+    this.prompt(prompts, function (answers) {
+      var features = answers.features || [];
+
+      function hasFeature(feat) {
+        return features && features.indexOf(feat) !== -1;
+      }
+
+      this.jade    = hasFeature('jade');
+      this.stylus  = hasFeature('stylus');
+
+//      this.config.defaults({
+//        coffee: this.coffee,
+//        jade: this.jade,
+//        stylus: this.stylus
+//      });
+//
+//      this.config.save();
+
+      done();
+    }.bind(this));
+
+
   },
 
   component: function () {
@@ -106,28 +110,44 @@ var Generator = yeoman.generators.NamedBase.extend({
     var html = this.jade ? 'jade': 'html';
     var css = this.stylus ?  'styl': 'css';
 
+//    console.log('js', js, this.options.coffee);
+
     var name = this.component;
 
-    var srcDir = function(p){ return path.join('lib', p); };
+    this.mkdir(name);
 
-    if(!this.config.get('project')){
-      this.template('_package.json', 'package.json');
-      this.template('_bower.json', 'bower.json');
-      this.template('_README.md', 'README.md');
-//      this.template('_index.js', 'index.js');
-    }else{
-      srcDir = function(p){
-//        return path.join('src', 'app', 'components', name, p);
-        return path.join('components', name, p);
-      };
-//      this.template('_README.md', srcDir('README.md'));
+    if (!this.standalone) {
+      this.template('src/_component.' + js, name + '/' + name + '.' + js);
+      this.template('src/_component.' + css, name + '/' + name + '.' + css);
+      this.template('src/_component.' + html, name + '/' + name + '.' + html);
+
+      return;
     }
-//    this.template('src/_index.' + js, srcDir('index.' + js));
-    this.template('src/_component.' + js, srcDir(name + '.' + js));
-    this.template('src/_component.' + css, srcDir(name + '.' + css));
-    this.template('src/_component.' + html, srcDir(name + '.' + html));
+
+    this.template('src/_component.' + js, name + '/index.' + js);
+    this.template('src/_component.' + css, name + '/index.' + css);
+    this.template('src/_component.' + html, name + '/index.' + html);
+
+    this.template('_README.md', name + '/README.md');
+    this.template('_package.json', name + '/package.json');
 
   }
 });
 
 module.exports = Generator;
+
+//function dashToCamel(string) {
+//  return string.replace(/-./g, function(match) {
+//    return match.charAt(1).toUpperCase();
+//  });
+//}
+//
+//function camelToDash(str) {
+//  return str.replace(/[a-z][A-Z]/g, function(str) {
+//    return str[0] + '-' + str[1].toLowerCase();
+//  });
+//}
+//
+//function capitaliseFirstLetter(string){
+//  return string.charAt(0).toUpperCase() + string.slice(1);
+//}

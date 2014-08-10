@@ -1,16 +1,15 @@
-var path = require("path");
-
 module.exports = <%= className %>;
 
-function <%= className %>(){};
+function <%= className %>(){}
 
-<%= className %>.prototype.view = path.join(__dirname, "<%= component %>");
-<%= className %>.prototype.style = path.join(__dirname, "<%= component %>");
+<%= className %>.prototype.view = __dirname<% if (!standalone) { %> + '/<%= component %>'<% } %>;
+<%= className %>.prototype.style =__dirname<% if (!standalone) { %> + '/<%= component %>'<% } %>;
+<%= className %>.prototype.name = '<%= component %>';
 
-<%= className %>.prototype.init = function(model){
+<%= className %>.prototype.init = function(){
 
 };
 
-<%= className %>.prototype.create = function(model, dom){
+<%= className %>.prototype.create = function(){
 
 };

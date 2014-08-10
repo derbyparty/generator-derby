@@ -78,6 +78,7 @@ var base = {
         'server/express.js',
         'server/store.js',
         'server/routes.js',
+        'server/config.js',
         'apps/app/index.js',
         'apps/error/index.js',
         'apps/app/views/index.html',
@@ -101,13 +102,13 @@ var base = {
   component: {
     generator: 'derby:component',
     deps: ['../../component'],
-    args: ['Component X'],
+    args: ['d-component-x'],
     expected: [
-      'package.json',
-      'README.md',
-      'lib/component-x.js',
-      'lib/component-x.css',
-      'lib/component-x.html'
+      'd-component-x/package.json',
+      'd-component-x/README.md',
+      'd-component-x/index.js',
+      'd-component-x/index.css',
+      'd-component-x/index.html'
     ],
     options: common.opts,
     prompts: {
@@ -117,12 +118,11 @@ var base = {
   subcomponent: {
     generator: 'derby:component',
     deps: ['../../component'],
-    args: ['Component X'],
+    args: ['component-x'],
     expected: [
-//      'components/component-x/README.md',
-      'components/component-x/component-x.js',
-      'components/component-x/component-x.css',
-      'components/component-x/component-x.html'
+      'component-x/component-x.js',
+      'component-x/component-x.css',
+      'component-x/component-x.html'
     ],
     options: common.opts,
     prompts: {
@@ -242,6 +242,12 @@ describe('derby subcomponent generator', function () {
     describe('a component', function () {
       var config = _.merge({}, base.subcomponent);
       config.expected = common.arrReplace(config.expected, /\.js$/, '.coffee');
+
+//      console.log('config', config);
+
+      config.options.coffee = true;
+
+
       before(setupSub(config));
       expected.call(this);
       lint.call(this);
