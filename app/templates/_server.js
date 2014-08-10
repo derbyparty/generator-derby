@@ -29,19 +29,16 @@ derby.run(function(){
 
     server.on('upgrade', upgrade);
 
-    var jobs = [];
-    apps.forEach(function(app){
-      jobs.push(function (cbk) {
-        app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
-          console.log('Bundle created:', chalk.yellow(app.name));
-          cbk();
-        });
+    async.each(apps, function (app, cb) {
+      app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
+        console.log('Bundle created:', chalk.yellow(app.name));
+        cb();
       });
-    });
-    async.parallel(jobs, function () {
+    }, function(){
       server.listen(process.env.PORT, function() {
         console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
       });
     });
+
   });
 });

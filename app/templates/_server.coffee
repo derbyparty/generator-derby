@@ -27,14 +27,11 @@ derby.run () ->
 
   server.on 'upgrade', upgrade
 
-  jobs = []
-  apps.forEach (app) ->
-    jobs.push (cbk)->
-      app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
-        console.log 'Bundle created:', chalk.yellow app.name
-        cbk()
-
-  async.parallel jobs, ()->
+  async.each apps, (app, cb) ->
+    app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
+      console.log 'Bundle created:', chalk.yellow app.name
+      cb()
+  , () ->
     server.listen process.env.PORT, () ->
       console.log '%d listening. Go to: http://localhost:%d/',
         process.pid, process.env.PORT

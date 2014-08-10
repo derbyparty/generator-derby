@@ -56,18 +56,22 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       choices: [{
         name: 'Redis', //proj level
         value: 'redis',
+        message: 'Would you like to include Redis?',
         checked: false
       },{
         name: 'Derby-login', //proj level / app level
         value: 'login',
+        message: 'Would you like to include Derby-login?',
         checked: false
       },{
         name: 'Racer-schema', //proj level
         value: 'schema',
+        message: 'Would you like to include Racer-schema?',
         checked: false
       },{
         name: 'Bower', //proj level
         value: 'bower',
+        message: 'Would you like to create initial Bower files and dirs?',
         checked: false
       }]
     }, {
