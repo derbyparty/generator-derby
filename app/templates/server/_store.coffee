@@ -3,7 +3,8 @@ coffeeify = require 'coffeeify'
 
 module.exports = (derby) ->
 
-  derby.use require 'racer-bundle'
+  derby.use require 'racer-bundle';<% if (schema) { %>
+  derby.use require('racer-schema'), require('./schema')<% } %>
 
 <% if (redis) { %>
   redisClient = require('redis').createClient()
