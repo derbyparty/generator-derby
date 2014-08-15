@@ -2,6 +2,8 @@
 
 [Yeoman](http://yeoman.io) generator that scaffolds out a [Derby](http://derbyjs.com) 0.6 projects.
 
+[![NPM](https://nodei.co/npm/generator-derby.png?downloads=true)](https://nodei.co/npm/generator-derby/)
+
 ### Features
 
 * Derby 0.6
