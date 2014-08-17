@@ -7,6 +7,13 @@ var _ = require('yeoman-generator/lib/actions/string')._;
 
 var Generator = yeoman.generators.NamedBase.extend({
   init: function () {
+    this.component = this.name;
+
+    this.log(
+        chalk.yellow('Derby 0.6 Component Generator for ') +
+        chalk.cyan(this.component)
+    );
+
     this.config.loadConfig();
     this.cfg = this.config.getAll();
 
@@ -20,7 +27,7 @@ var Generator = yeoman.generators.NamedBase.extend({
 
     this.coffee = this.options.coffee;
 
-    this.component = this.name;
+
 
     this.standalone = this.name.indexOf('d-') === 0;
 
@@ -33,11 +40,6 @@ var Generator = yeoman.generators.NamedBase.extend({
 
   askFor: function () {
     var done = this.async();
-
-    this.log(
-      chalk.yellow('Derby 0.6 Component Generator for ') +
-      chalk.cyan(this.component)
-    );
 
     this.log(
       chalk.yellow('The class will be called ') +
@@ -53,12 +55,6 @@ var Generator = yeoman.generators.NamedBase.extend({
       if (typeof this.coffee === 'undefined') {
         this.coffee = this.cfg.coffee;
       }
-
-      this.jade   = this.cfg.jade;
-      this.stylus = this.cfg.stylus;
-
-      return done();
-
     }
 
     var prompts = [{
@@ -84,27 +80,19 @@ var Generator = yeoman.generators.NamedBase.extend({
         return features && features.indexOf(feat) !== -1;
       }
 
+      console.log('hello', features);
+
       this.jade    = hasFeature('jade');
       this.stylus  = hasFeature('stylus');
 
-//      this.config.defaults({
-//        coffee: this.coffee,
-//        jade: this.jade,
-//        stylus: this.stylus
-//      });
-//
-//      this.config.save();
-
       done();
     }.bind(this));
-
-
   },
 
   component: function () {
-    var js = this.coffee ? 'coffee': 'js';
-    var html = this.jade ? 'jade': 'html';
-    var css = this.stylus ?  'styl': 'css';
+    var js    = this.coffee ? 'coffee': 'js';
+    var html  = this.jade ? 'jade': 'html';
+    var css   = this.stylus ?  'styl': 'css';
 
 //    console.log('js', js, this.options.coffee);
 

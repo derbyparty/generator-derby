@@ -13,18 +13,39 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.config.loadConfig();
     this.cfg = this.config.getAll();
 
+    // App-mode
     if (this.cfg.project) {
       this.log(
           chalk.cyan('I\'ve found Derby project named: ') +
           chalk.yellow(this.cfg.project) + '\n'
       );
 
-      this.log(chalk.red('We are in app-creation mode!\n'));
+//      this.log(chalk.cyan('We are in app-creation mode!\n'));
 
       this.argument('name');
 
+      if (this.cfg.apps.indexOf(this.name) >= 0) {
+        this.log(
+            chalk.red('Application already exists: ') +
+            chalk.yellow(this.name) + '\n'
+        );
+        return;
+      }
+
       this.appMode = true;
       this.login = false;
+
+      this.coffee = this.cfg.coffee;
+
+    // Project-mode
+    } else {
+      this.option('coffee', {
+        desc: 'Use CoffeeScript',
+        type: Boolean,
+        defaults: false
+      });
+
+      this.coffee = this.options.coffee;
     }
 
     updateNotifier({packageName: this.pkg.name, packageVersion: this.pkg.version}).notify();
@@ -38,13 +59,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 //
 //    this.testFramework = this.options['test-framework'];
 
-    this.option('coffee', {
-      desc: 'Use CoffeeScript',
-      type: Boolean,
-      defaults: false
-    });
 
-    this.coffee = this.options.coffee;
 
     this.email    = this.user.git.email;
     this.username = this.user.git.username;
@@ -207,21 +222,31 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.md         = hasFeature('md');
       this.bootstrap  = hasFeature('bootstrap');
 
-      this.config.defaults({
-        project: this.appname,
-        app: this.app,
-        coffee: this.coffee,
-        stylus: this.stylus,
-        jade: this.jade,
-        md: this.md
-      });
-
-      this.config.save();
-
       done();
 
     }.bind(this));
 
+  },
+
+  saveConfig: function(){
+
+    if (this.appMode) {
+      this.cfg.apps = this.cfg.apps || [];
+      this.cfg.apps.push(this.name);
+
+      this.config.set('apps', this.cfg.apps);
+
+    } else {
+      this.config.defaults({
+        project: this.appname,
+        apps: [this.app],
+        coffee: this.coffee
+//        stylus: this.stylus,
+//        jade: this.jade
+      });
+    }
+
+    this.config.save();
   },
 
   // Project generation
@@ -390,24 +415,37 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.copy('apps/app/styles/index.'+css, appPath + '/styles/index.'+css);
   },
 
+  readProjectPackage: function(){
+
+    var projectPackage = require(this.dest._base + '/package.json');
+    this.dependencies = Object.keys(projectPackage.dependencies);
+  },
+
+  _addNpmPackage: function(pack){
+    if (this.dependencies.indexOf(pack) === -1) {
+      this.npm = this.npm || [];
+      this.npm.push(pack);
+    }
+  },
+
   appDependencies: function(){
 
     this.npm = this.npm || [];
 
     if (this.jade) {
-      this.npm.push('derby-jade');
+      this._addNpmPackage('derby-jade');
     }
 
     if (this.stylus) {
-      this.npm.push('derby-stylus');
+      this._addNpmPackage('derby-stylus');
     }
 
     if (this.bootstrap) {
-      this.npm.push('d-bootstrap');
+      this._addNpmPackage('d-bootstrap');
     }
 
     if (this.markdown) {
-      this.npm.push('derby-markdown');
+      this._addNpmPackage('derby-markdown');
     }
 
   },

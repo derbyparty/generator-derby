@@ -17,6 +17,8 @@ function runGenerator(context, config, done){
     expected: []
   }, config);
 
+//  console.log('context.config', context.config);
+
   context.generator = helpers.createGenerator(
     context.config.generator,
     context.config.deps,
@@ -218,7 +220,7 @@ describe('derby subcomponent generator', function () {
   describe('in a `jade` app', function(){
     before(setup(_.merge({}, base.app, {prompts: {features: ['jade']}})));
     describe('a component', function () {
-      var config = _.merge({}, base.subcomponent);
+      var config = _.merge({}, base.subcomponent, {prompts: {features: ['jade']}});
       config.expected = common.arrReplace(config.expected, /\.html$/, '.jade');
       before(setupSub(config));
       expected.call(this);
@@ -229,7 +231,7 @@ describe('derby subcomponent generator', function () {
   describe('in a `stylus` app', function(){
     before(setup(_.merge({}, base.app, {prompts: {features: ['stylus']}})));
     describe('a component', function () {
-      var config = _.merge({}, base.subcomponent);
+      var config = _.merge({}, base.subcomponent, {prompts: {features: ['stylus']}});
       config.expected = common.arrReplace(config.expected, /\.css$/, '.styl');
       before(setupSub(config));
       expected.call(this);
@@ -240,13 +242,8 @@ describe('derby subcomponent generator', function () {
   describe('in a `coffee` app', function(){
     before(setup(_.merge({}, base.app, {options: {coffee: true}})));
     describe('a component', function () {
-      var config = _.merge({}, base.subcomponent);
+      var config = _.merge({}, base.subcomponent, {options: {coffee: true}});
       config.expected = common.arrReplace(config.expected, /\.js$/, '.coffee');
-
-//      console.log('config', config);
-
-      config.options.coffee = true;
-
 
       before(setupSub(config));
       expected.call(this);
