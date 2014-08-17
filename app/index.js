@@ -29,7 +29,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
             chalk.red('Application already exists: ') +
             chalk.yellow(this.name) + '\n'
         );
-        return;
+
+        throw new Error('Application already exists');
       }
 
       this.appMode = true;
