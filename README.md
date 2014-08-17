@@ -31,7 +31,7 @@
 #### `yo derby`
 Create a new Derby project.
 
-#### `yo derby:component component-name
+#### `yo derby:component component-name`
 Creates a [Derby component][] inside current folder.
 
 Run inside of an project (created with `yo derby`) in the `/components/` folder, the new component will

@@ -389,7 +389,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
         done();
       });
-    } 
+    }
 
   }
 
