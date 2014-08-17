@@ -6,28 +6,37 @@ var updateNotifier = require('update-notifier');
 
 var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
-//    var self = this;
+    this.log('\nDerby 0.6 Project generator:\n');
+
     this.pkg = require('../package.json');
+
+    this.config.loadConfig();
+    this.cfg = this.config.getAll();
+
+    if (this.cfg.project) {
+      this.log(
+          chalk.cyan('I\'ve found Derby project named: ') +
+          chalk.yellow(this.cfg.project) + '\n'
+      );
+
+      this.log(chalk.red('We are in app-creation mode!\n'));
+
+      this.argument('name');
+
+      this.appMode = true;
+      this.login = false;
+    }
 
     updateNotifier({packageName: this.pkg.name, packageVersion: this.pkg.version}).notify();
 
-//    this.on('end', function () {
-//      if (!this.options['skip-install']) {
-//        this.installDependencies({
-//          'callback': function(){
-//            self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
-//          }
-//        });
-//      }
+//    // setup the test-framework property, Gruntfile template will need this
+//    this.option('test-framework', {
+//      desc: 'Test framework to be invoked',
+//      type: String,
+//      defaults: 'mocha'
 //    });
-
-    // setup the test-framework property, Gruntfile template will need this
-    this.option('test-framework', {
-      desc: 'Test framework to be invoked',
-      type: String,
-      defaults: 'mocha'
-    });
-    this.testFramework = this.options['test-framework'];
+//
+//    this.testFramework = this.options['test-framework'];
 
     this.option('coffee', {
       desc: 'Use CoffeeScript',
@@ -45,9 +54,12 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   },
 
   askForProject: function () {
-    var done = this.async();
 
-    this.log('Derby 0.6 Project generator:\n');
+    if (this.appMode) {
+      return;
+    }
+
+    var done = this.async();
 
     var prompts = [{
       type: 'checkbox',
@@ -131,8 +143,12 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       done();
     }.bind(this));
   },
+  askForAppName: function(){
 
-  askForApp: function(){
+    if (this.appMode) {
+      this.app = this.name;
+      return;
+    }
 
     var done = this.async();
 
@@ -144,64 +160,76 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (answers) {
-
       this.app = answers.app;
-
-      var prompts = [{
-        type: 'checkbox',
-        name: 'features',
-        message: 'Select "' + chalk.yellow(this.app)+'"-application features',
-        choices: [{
-          name: 'Jade', //app level
-          value: 'jade',
-          checked: true
-        },{
-          name: 'Stylus', //app level
-          value: 'stylus',
-          checked: true
-        },{
-          name: 'Markdown', //app level
-          value: 'md',
-          checked: false
-        },{
-          name: 'Bootstrap 3', //app level
-          value: 'bootstrap',
-          checked: false
-        }]
-      }];
-
-      this.prompt(prompts, function (answers) {
-
-        function hasFeature(feat) {
-          return features && features.indexOf(feat) !== -1;
-        }
-
-        var features = answers.features;
-
-        this.jade       = hasFeature('jade');
-        this.stylus     = hasFeature('stylus');
-        this.md         = hasFeature('md');
-        this.bootstrap  = hasFeature('bootstrap');
-
-        this.config.defaults({
-          project: this.appname,
-          app: this.app,
-          coffee: this.coffee,
-          stylus: this.stylus,
-          jade: this.jade,
-          md: this.md
-        });
-
-        this.config.save();
-
-        done();
-
-      }.bind(this));
+      done();
     }.bind(this));
+
+  },
+
+
+  askForAppFeatures: function(){
+
+    var done = this.async();
+
+    var prompts = [{
+      type: 'checkbox',
+      name: 'features',
+      message: 'Select "' + chalk.yellow(this.app)+'"-application features',
+      choices: [{
+        name: 'Jade', //app level
+        value: 'jade',
+        checked: true
+      },{
+        name: 'Stylus', //app level
+        value: 'stylus',
+        checked: true
+      },{
+        name: 'Markdown', //app level
+        value: 'md',
+        checked: false
+      },{
+        name: 'Bootstrap 3', //app level
+        value: 'bootstrap',
+        checked: false
+      }]
+    }];
+
+    this.prompt(prompts, function (answers) {
+
+      function hasFeature(feat) {
+        return features && features.indexOf(feat) !== -1;
+      }
+
+      var features = answers.features;
+
+      this.jade       = hasFeature('jade');
+      this.stylus     = hasFeature('stylus');
+      this.md         = hasFeature('md');
+      this.bootstrap  = hasFeature('bootstrap');
+
+      this.config.defaults({
+        project: this.appname,
+        app: this.app,
+        coffee: this.coffee,
+        stylus: this.stylus,
+        jade: this.jade,
+        md: this.md
+      });
+
+      this.config.save();
+
+      done();
+
+    }.bind(this));
+
   },
 
   // Project generation
   project: function () {
+
+    if (this.appMode) {
+      return;
+    }
     
     var js    = this.coffee ? 'coffee': 'js';
 
@@ -249,6 +277,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   },
 
   projectDependencies: function(){
+
+    if (this.appMode) {
+      return;
+    }
+
     this.npm = [
       // Derby
       'derby', // 'derby@0.6.0-alpha22'
@@ -314,6 +347,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
   // Error-app generation
   err: function(){
+
+    if (this.appMode) {
+      return;
+    }
+
     var js    = this.coffee ? 'coffee': 'js';
     var html  = this.jade ? 'jade': 'html';
     var css   = this.stylus?  'styl': 'css';
@@ -376,23 +414,20 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
   installDependencies: function() {
 
-
-
     var self = this;
 
     if (!this.options['skip-install']) {
       var done = this.async();
 
-      self.log('\n\nI\'m all done. ' + 'Running ' + chalk.yellow.bold('npm install') + '\n');
+      self.log('\n\nI\'m all done. ' + 'Running ' + chalk.yellow.bold('npm install\n'));
 
       this.npmInstall(this.npm, {save: true}, function(){
-        self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
+        self.log('\nAll is done, to start app use: ' + chalk.yellow.bold('npm start\n'));
         done();
       });
     }
 
   }
-
 
 });
 

@@ -10,11 +10,7 @@ var Generator = yeoman.generators.NamedBase.extend({
     this.config.loadConfig();
     this.cfg = this.config.getAll();
 
-//    console.log('generator', this.env.cwd);
-//    console.log('generator', this.cfg);
-
     this.destinationRoot(this.env.cwd);
-//    console.log('options', this.options);
 
     this.option('coffee', {
       desc: 'Use CoffeeScript',
