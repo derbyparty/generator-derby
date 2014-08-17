@@ -6,20 +6,20 @@ var updateNotifier = require('update-notifier');
 
 var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
-    var self = this;
+//    var self = this;
     this.pkg = require('../package.json');
 
     updateNotifier({packageName: this.pkg.name, packageVersion: this.pkg.version}).notify();
 
-    this.on('end', function () {
-      if (!this.options['skip-install']) {
-        this.installDependencies({
-          'callback': function(){
-            self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
-          }
-        });
-      }
-    });
+//    this.on('end', function () {
+//      if (!this.options['skip-install']) {
+//        this.installDependencies({
+//          'callback': function(){
+//            self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
+//          }
+//        });
+//      }
+//    });
 
     // setup the test-framework property, Gruntfile template will need this
     this.option('test-framework', {
@@ -133,6 +133,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   },
 
   askForApp: function(){
+
     var done = this.async();
 
     var prompts = [{
@@ -201,6 +202,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
   // Project generation
   project: function () {
+    
     var js    = this.coffee ? 'coffee': 'js';
 
     this.mkdir('components');
@@ -246,6 +248,70 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_README.md', 'README.md');
   },
 
+  projectDependencies: function(){
+    this.npm = [
+      // Derby
+      'derby', // 'derby@0.6.0-alpha22'
+
+      'livedb-mongo',
+      'racer-bundle',
+      'racer-highway',
+
+      // Coffee-script support
+      'coffeeify',
+      'coffee-script',
+
+      // Utilities
+      'async',
+      'chalk',
+
+      // Express
+      'express',
+
+      'connect-mongo',
+      'cookie-parser',
+      'body-parser',
+      'express-session',
+      'serve-static',
+      'compression',
+      'serve-favicon'
+    ];
+
+    if (this.login) {
+      this.npm.push('derby-login');
+    }
+
+    if (this.loginGithub){
+      this.npm.push('passport-github');
+    }
+
+    if (this.loginGoogle){
+      this.npm.push('passport-google-oauth');
+    }
+
+
+    if (this.loginLinkedIn) {
+      this.npm.push('passport-linkedin');
+    }
+
+    if (this.loginFacebook) {
+      this.npm.push('passport-facebook');
+    }
+
+    if (this.loginVkontakte) {
+      this.npm.push('passport-vkontakte');
+    }
+
+    if (this.schema) {
+      this.npm.push('racer-schema');
+    }
+
+    if (this.redis) {
+      this.npm.push('redis');
+    }
+
+  },
+
   // Error-app generation
   err: function(){
     var js    = this.coffee ? 'coffee': 'js';
@@ -284,7 +350,49 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.mkdir(appPath + '/styles');
     this.copy('apps/app/styles/index.'+css, appPath + '/styles/index.'+css);
+  },
+
+  appDependencies: function(){
+
+    this.npm = this.npm || [];
+
+    if (this.jade) {
+      this.npm.push('derby-jade');
+    }
+
+    if (this.stylus) {
+      this.npm.push('derby-stylus');
+    }
+
+    if (this.bootstrap) {
+      this.npm.push('d-bootstrap');
+    }
+
+    if (this.markdown) {
+      this.npm.push('derby-markdown');
+    }
+
+  },
+
+  installDependencies: function() {
+
+
+
+    var self = this;
+
+    if (!this.options['skip-install']) {
+      var done = this.async();
+
+      self.log('\n\nI\'m all done. ' + 'Running ' + chalk.yellow.bold('npm install') + '\n');
+
+      this.npmInstall(this.npm, {save: true}, function(){
+        self.log('\nAll is done, to start app use: ' + chalk.yellow('npm start\n'));
+        done();
+      });
+    } 
+
   }
+
 
 });
 
