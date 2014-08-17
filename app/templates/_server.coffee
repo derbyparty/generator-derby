@@ -11,6 +11,7 @@ derby.run () ->
 
   apps = [
     require './apps/<%= app %>'
+    # <end of app list> - don't remove this comment
   ]
 
   express = require './server/express'

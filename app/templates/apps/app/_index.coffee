@@ -1,6 +1,6 @@
 derby = require 'derby'
 
-app = module.exports = derby.createApp 'app', __filename
+app = module.exports = derby.createApp '<%= app %>', __filename
 
 global.app = app unless derby.util.isProduction
 <% if (bootstrap) { %>

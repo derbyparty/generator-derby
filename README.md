@@ -31,6 +31,9 @@
 #### `yo derby`
 Create a new Derby project.
 
+#### `yo derby app-name`
+Create a new additional Derby app. Inside existing Derby-project (created by generator-derby).
+
 #### `yo derby:component component-name`
 Creates a [Derby component][] inside current folder.
 

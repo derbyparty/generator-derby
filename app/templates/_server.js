@@ -12,6 +12,7 @@ derby.run(function(){
 
   var apps = [
     require('./apps/<%= app %>')
+    // <end of app list> - don't remove this comment
   ];
 
   var express = require('./server/express');

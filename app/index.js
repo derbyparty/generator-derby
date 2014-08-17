@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var crypto = require('crypto');
 var updateNotifier = require('update-notifier');
+var generatorUtil = require('../util.js');
 
 var DerbyGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -466,6 +467,32 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       });
     }
 
+  },
+
+  addAppToProjecnt: function(){
+    var js, needle, splicable;
+
+
+    if (!this.appMode) {
+      return;
+    }
+
+    if (this.coffee) {
+      js = 'coffee';
+      needle = '# <end of app list> - don\'t remove this comment';
+      splicable = '    require \'./apps/' + this.name + '\'';
+
+    } else {
+      js = 'js';
+      needle = '// <end of app list> - don\'t remove this comment';
+      splicable = '  , require(\'./apps/' + this.name + '\')';
+    }
+
+    generatorUtil.rewriteFile({
+      file: 'server.'+js,
+      needle: needle,
+      splicable: [splicable]
+    });
   }
 
 });

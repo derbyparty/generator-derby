@@ -1,6 +1,6 @@
 var derby = require('derby');
 
-var app = module.exports = derby.createApp('app', __filename);
+var app = module.exports = derby.createApp('<%= app %>', __filename);
 
 if (!derby.util.isProduction) global.app = app;
 <% if (bootstrap) { %>
