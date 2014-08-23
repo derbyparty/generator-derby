@@ -8,14 +8,22 @@
     "type": "git",
     "url": "git://github.com/derbyparty/generator-derby.git"
   },
-  "bugs": {
-    "url": "https://github.com/derbyparty/generator-derby/issues"
+  "bugs": "https://github.com/derbyparty/generator-derby/issues",
+  "directories": {
+    "app": "app",
+    "component": "component",
+    "test": "test"
   },
   "author": {
     "name": "Artur Zayats",
     "email": "zag2art@gmail.com",
     "url": "https://github.com/zag2art"
   },
+  "maintainers": [{
+    "name": "Artur Zayats",
+    "email": "zag2art@gmail.com",
+    "url": "https://github.com/zag2art"
+  }],
   "engines": {
     "node": ">=0.10.0"
   },
@@ -23,7 +31,15 @@
     "test": "./node_modules/.bin/jshint test/*.js app/*.js component/*.js && ./node_modules/.bin/mocha"
   },
   "files": [
-    "app"
+    "app",
+    "component",
+    "util.js",
+    "README.md"
+  ],
+  "licenses": [
+     {
+         "type": "MIT"
+     }
   ],
   "keywords": [
     "yeoman-generator",
