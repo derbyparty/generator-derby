@@ -1,6 +1,6 @@
 {
   "name": "generator-derby",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Yeoman generator for Derby 0.6 projects",
   "license": "MIT",
   "main": "app/index.js",
@@ -19,11 +19,13 @@
     "email": "zag2art@gmail.com",
     "url": "https://github.com/zag2art"
   },
-  "maintainers": [{
-    "name": "Artur Zayats",
-    "email": "zag2art@gmail.com",
-    "url": "https://github.com/zag2art"
-  }],
+  "maintainers": [
+    {
+      "name": "Artur Zayats",
+      "email": "zag2art@gmail.com",
+      "url": "https://github.com/zag2art"
+    }
+  ],
   "engines": {
     "node": ">=0.10.0"
   },
@@ -37,9 +39,9 @@
     "README.md"
   ],
   "licenses": [
-     {
-         "type": "MIT"
-     }
+    {
+      "type": "MIT"
+    }
   ],
   "keywords": [
     "yeoman-generator",
