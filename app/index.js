@@ -272,6 +272,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.mkdir('test');
 
     this.mkdir('public');
+    this.mkdir('public/img');
+    this.copy('public/img/favicon.ico', 'public/img/favicon.ico');
+
     this.mkdir('server');
     this.copy('server/error.'+js, 'server/error.'+js);
     this.copy('server/routes.'+js, 'server/routes.'+js);
@@ -327,12 +330,12 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
       // Express
       'express',
-
       'connect-mongo',
       'cookie-parser',
       'body-parser',
       'express-session',
       'serve-static',
+      'serve-favicon',
       'compression',
       'serve-favicon'
     ];

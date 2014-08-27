@@ -27,7 +27,7 @@ derby.run(function(){
 
     async.each(apps, function (app, cb) {
       app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
-        console.log('Bundle created:', chalk.yellow(app.name));
+        console.log('Bundle created:', chalk.blue(app.name));
         cb();
       });
     }, function(){

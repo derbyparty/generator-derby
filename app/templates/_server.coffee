@@ -27,7 +27,7 @@ derby.run () ->
 
   async.each apps, (app, cb) ->
     app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
-      console.log 'Bundle created:', chalk.yellow app.name
+      console.log 'Bundle created:', chalk.blue app.name
       cb()
   , () ->
     server.listen process.env.PORT, () ->

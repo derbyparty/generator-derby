@@ -2,6 +2,7 @@ var express = require('express');
 
 var expressSession = require('express-session');
 var serveStatic = require('serve-static');
+var favicon = require('serve-favicon');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -24,6 +25,7 @@ module.exports = function (store, apps, error, cb){
   var handlers = highway(store, {session: session});
 
   var expressApp = express()
+    .use(favicon(process.cwd() + '/public/img/favicon.ico'))
     .use(compression())
     .use(serveStatic(process.cwd() + '/public'))
     .use(store.modelMiddleware())

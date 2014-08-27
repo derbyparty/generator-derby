@@ -2,6 +2,7 @@ express = require 'express'
 
 expressSession = require 'express-session'
 serveStatic = require 'serve-static'
+favicon = require 'serve-favicon'
 compression = require 'compression'
 cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
@@ -32,6 +33,7 @@ module.exports = (store, apps, error) ->
   handlers = highway store, session: session
 
   expressApp = express()
+    .use favicon process.cwd() + '/public/img/favicon.ico'
     .use compression()
     .use serveStatic process.cwd() + '/public'
     .use store.modelMiddleware()
