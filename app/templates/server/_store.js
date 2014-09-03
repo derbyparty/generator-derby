@@ -1,9 +1,10 @@
 var liveDbMongo = require('livedb-mongo');
-var coffeeify = require('coffeeify');
+var coffeeify = require('coffeeify');<% if (yamlify) { %>
+var yamlify = require('yamlify');<% } %>
 
 module.exports = store;
 
-function store(derby) {
+function store(derby, publicDir) {
 
   derby.use(require('racer-bundle'));<% if (schema) { %>
   derby.use(require('racer-schema'), require('./schema'));<% } %>
@@ -22,7 +23,8 @@ function store(derby) {
 <% } %>
   store.on('bundle', function(browserify) {
 
-    browserify.transform({global: true}, coffeeify);
+    browserify.transform({global: true}, coffeeify);<% if (yamlify) { %>
+    browserify.transform({global: true}, yamlify);<% } %>
 
     var pack = browserify.pack;
     browserify.pack = function(opts) {

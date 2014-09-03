@@ -17,7 +17,7 @@ createUserId = (req, res, next) ->
   model.set '_session.userId', userId
   next()<% } %>
 
-module.exports = (store, apps, error) ->
+module.exports = (store, apps, error, publicDir) ->
 
   connectStore = require('connect-mongo')(expressSession)
   sessionStore = new connectStore url: process.env.MONGO_URL
@@ -33,9 +33,9 @@ module.exports = (store, apps, error) ->
   handlers = highway store, session: session
 
   expressApp = express()
-    .use favicon process.cwd() + '/public/img/favicon.ico'
+    .use favicon publicDir + '/img/favicon.ico'
     .use compression()
-    .use serveStatic process.cwd() + '/public'
+    .use serveStatic publicDir
     .use store.modelMiddleware()
     .use cookieParser()
     .use bodyParser.json()

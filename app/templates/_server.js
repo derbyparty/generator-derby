@@ -7,7 +7,9 @@ var chalk = require('chalk');
 var publicDir = process.cwd() + '/public';
 
 derby.run(function(){
-  require('coffee-script/register');
+  require('coffee-script/register');<% if (yamlify) { %>
+  require('yamlify/register');<% } %>
+
   require('./server/config');
 
   var apps = [
@@ -16,11 +18,11 @@ derby.run(function(){
   ];
 
   var express = require('./server/express');
-  var store = require('./server/store')(derby);
+  var store = require('./server/store')(derby, publicDir);
 
   var error = require('./server/error');
 
-  express(store, apps, error, function(expressApp, upgrade){
+  express(store, apps, error, publicDir, function(expressApp, upgrade){
     var server = http.createServer(expressApp);
 
     server.on('upgrade', upgrade);

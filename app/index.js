@@ -98,6 +98,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         message: 'Would you like to include Racer-schema?',
         checked: false
       },{
+        name: 'Yamlify', //proj level
+        value: 'yamlify',
+        message: 'Would you like to include Yamlify?',
+        checked: false
+      },{
         name: 'Bower', //proj level
         value: 'bower',
         message: 'Would you like to create initial Bower files and dirs?',
@@ -149,6 +154,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.redis   = hasFeature('redis');
       this.login   = hasFeature('login');
       this.schema  = hasFeature('schema');
+      this.yamlify  = hasFeature('yamlify');
       this.bower = hasFeature('bower');
 
       this.loginGithub = hasLoginPackage('loginGithub');
@@ -339,6 +345,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       'compression',
       'serve-favicon'
     ];
+
+    if (this.yamlify) {
+      this.npm.push('yamlify');
+    }
 
     if (this.login) {
       this.npm.push('derby-login');

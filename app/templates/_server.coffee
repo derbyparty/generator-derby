@@ -6,7 +6,8 @@ chalk = require 'chalk'
 
 publicDir = process.cwd() + '/public'
 
-derby.run () ->
+derby.run () -><% if (yamlify) { %>
+  require 'yamlify/register'<% } %>
   require './server/config'
 
   apps = [
@@ -15,11 +16,11 @@ derby.run () ->
   ]
 
   express = require './server/express'
-  store = require('./server/store')(derby)
+  store = require('./server/store')(derby, publicDir)
 
   error = require './server/error'
 
-  {expressApp, upgrade} = express store, apps, error
+  {expressApp, upgrade} = express store, apps, error, publicDir
 
   server = http.createServer expressApp
 

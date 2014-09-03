@@ -1,7 +1,8 @@
 liveDbMongo = require 'livedb-mongo'
-coffeeify = require 'coffeeify'
+coffeeify = require 'coffeeify'<% if (yamlify) { %>
+yamlify = require 'yamlify'<% } %>
 
-module.exports = (derby) ->
+module.exports = (derby, publicDir) ->
 
   derby.use require 'racer-bundle'<% if (schema) { %>
   derby.use require('racer-schema'), require('./schema')<% } %>
@@ -20,7 +21,8 @@ module.exports = (derby) ->
 <% } %>
   store.on 'bundle', (browserify) ->
 
-    browserify.transform {global: true}, coffeeify
+    browserify.transform {global: true}, coffeeify<% if (yamlify) { %>
+    browserify.transform {global: true}, yamlify<% } %>
 
     pack = browserify.pack
 

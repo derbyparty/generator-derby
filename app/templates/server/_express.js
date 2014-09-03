@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var highway = require('racer-highway');<% if (login) { %>
 var derbyLogin = require('derby-login');<% } %>
 
-module.exports = function (store, apps, error, cb){
+module.exports = function (store, apps, error, publicDir, cb){
 
   var connectStore = require('connect-mongo')(expressSession);
   var sessionStore = new connectStore({url: process.env.MONGO_URL});
@@ -25,9 +25,9 @@ module.exports = function (store, apps, error, cb){
   var handlers = highway(store, {session: session});
 
   var expressApp = express()
-    .use(favicon(process.cwd() + '/public/img/favicon.ico'))
+    .use(favicon(publicDir + '/img/favicon.ico'))
     .use(compression())
-    .use(serveStatic(process.cwd() + '/public'))
+    .use(serveStatic(publicDir))
     .use(store.modelMiddleware())
     .use(cookieParser())
     .use(bodyParser.json())
