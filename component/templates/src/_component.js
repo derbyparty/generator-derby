@@ -13,3 +13,7 @@ function <%= className %>(){}
 <%= className %>.prototype.create = function(){
 
 };
+
+<%= className %>.prototype.destroy = function(){
+
+};

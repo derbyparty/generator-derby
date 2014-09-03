@@ -9,3 +9,5 @@ class <%= className %>
   init: ->
 
   create: ->
+
+  destroy: ->
