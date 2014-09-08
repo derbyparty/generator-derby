@@ -13,6 +13,6 @@ app.serverUse(module, 'derby-markdown');<% } %>
 app.loadViews(__dirname + '/views');
 app.loadStyles(__dirname + '/styles');
 
-app.get('/', function(page){
+app.get('/', function(page, model){
   page.render('home');
 });

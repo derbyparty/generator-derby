@@ -13,5 +13,5 @@ app.serverUse module, 'derby-markdown'<% } %>
 app.loadViews __dirname + '/views'
 app.loadStyles __dirname + '/styles'
 
-app.get '/', (page) ->
+app.get '/', (page, model) ->
   page.render 'home'
