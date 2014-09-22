@@ -27,16 +27,23 @@ derby.run(function(){
 
     server.on('upgrade', upgrade);
 
-    async.each(apps, function (app, cb) {
-      app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(){
-        console.log('Bundle created:', chalk.blue(app.name));
-        cb();
-      });
-    }, function(){
+    async.each(apps, bundleApp, function(){
       server.listen(process.env.PORT, function() {
-        console.log('%d listening. Go to: http://localhost:%d/', process.pid, process.env.PORT);
+        console.log('%d listening. Go to: http://localhost:%d/',
+            process.pid, process.env.PORT);
       });
     });
+
+    function bundleApp (app, cb) {
+      app.writeScripts(store, publicDir, {extensions: ['.coffee']}, function(err){
+        if (err) {
+          console.log("Bundle don't created:", chalk.red(app.name), ', error:', err);
+        } else {
+          console.log('Bundle created:', chalk.blue(app.name));
+        }
+        cb();
+      });
+    }
 
   });
 });

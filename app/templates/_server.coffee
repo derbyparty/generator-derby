@@ -26,11 +26,16 @@ derby.run () -><% if (yamlify) { %>
 
   server.on 'upgrade', upgrade
 
-  async.each apps, (app, cb) ->
-    app.writeScripts store, publicDir, extensions: ['.coffee'], () ->
-      console.log 'Bundle created:', chalk.blue app.name
-      cb()
-  , () ->
-    server.listen process.env.PORT, () ->
-      console.log '%d listening. Go to: http://localhost:%d/',
-        process.pid, process.env.PORT
+  bundleApp = (app, cb) ->
+    app.writeScripts store, publicDir, {extensions: ['.coffee']}, (err) ->
+      if err
+        console.log "Bundle don't created:",
+            chalk.red(app.name), ', error:', err
+      else
+        console.log 'Bundle created:', chalk.blue(app.name)
+
+      cb();
+
+  async.each apps, bundleApp, () -> server.listen process.env.PORT, () ->
+    console.log '%d listening. Go to: http://localhost:%d/',
+      process.pid, process.env.PORT
