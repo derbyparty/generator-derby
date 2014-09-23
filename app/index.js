@@ -291,6 +291,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     if (this.schema) {
       this.mkdir('server/model');
       this.copy('server/schema.'+js, 'server/schema.'+js);
+      this.copy('server/model/auths.'+js, 'server/model/auths.'+js);
       this.copy('server/model/products.'+js, 'server/model/products.'+js);
     }
 
