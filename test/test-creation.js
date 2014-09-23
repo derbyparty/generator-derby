@@ -122,9 +122,9 @@ var base = {
     deps: ['../../component'],
     args: ['component-x'],
     expected: [
-      'component-x/component-x.js',
-      'component-x/component-x.css',
-      'component-x/component-x.html'
+      'component-x/index.js',
+      'component-x/index.css',
+      'component-x/index.html'
     ],
     options: common.opts,
     prompts: {

@@ -100,17 +100,14 @@ var Generator = yeoman.generators.NamedBase.extend({
 
     this.mkdir(name);
 
-    if (!this.standalone) {
-      this.template('src/_component.' + js, name + '/' + name + '.' + js);
-      this.template('src/_component.' + css, name + '/' + name + '.' + css);
-      this.template('src/_component.' + html, name + '/' + name + '.' + html);
 
+    this.template('src/_index.' + js, name + '/index.' + js);
+    this.template('src/_index.' + css, name + '/index.' + css);
+    this.template('src/_index.' + html, name + '/index.' + html);
+
+    if (!this.standalone) {
       return;
     }
-
-    this.template('src/_component.' + js, name + '/index.' + js);
-    this.template('src/_component.' + css, name + '/index.' + css);
-    this.template('src/_component.' + html, name + '/index.' + html);
 
     this.template('_README.md', name + '/README.md');
     this.template('_package.json', name + '/package.json');
