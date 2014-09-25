@@ -18,6 +18,7 @@ module.exports = {
       description: 'User email',
       type: 'string'
     },
+    timestamps: {type: 'object'},
     local: {type: 'object'},
     google: {type: 'object'},
     facebook: {type: 'object'},
