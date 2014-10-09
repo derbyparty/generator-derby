@@ -382,6 +382,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     if (this.redis) {
       this.npm.push('redis');
+      this.npm.push('livedb');
     }
 
   },

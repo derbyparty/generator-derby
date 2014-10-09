@@ -5,21 +5,27 @@ var yamlify = require('yamlify');<% } %>
 module.exports = store;
 
 function store(derby, publicDir) {
+  var mongo = liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true});
 
   derby.use(require('racer-bundle'));<% if (schema) { %>
   derby.use(require('racer-schema'), require('./schema'));<% } %>
 <% if (redis) { %>
-  var redisClient = require('redis').createClient();
+  var redis = require('redis');
+  var livedb = require('livedb');
+  var redisClient = redis.createClient();
+  var redisObserver = redis.createClient();
+
   redisClient.select(process.env.REDIS_DB);
+  redisObserver.select(process.env.REDIS_DB);
+
+  var redisDriver = livedb.redisDriver(mongo, redisClient, redisObserver);
 
   var store = derby.createStore({
-    db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true}),
-    redis: redisClient
+    backend: livedb.client({driver: redisDriver, db: mongo})
   });
 <% } else { %>
-  var opts = {db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true})};
 
-  var store = derby.createStore(opts);
+  var store = derby.createStore({db: mongo});
 <% } %>
   store.on('bundle', function(browserify) {
 
