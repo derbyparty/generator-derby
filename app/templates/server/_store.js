@@ -10,15 +10,10 @@ function store(derby, publicDir) {
   derby.use(require('racer-bundle'));<% if (schema) { %>
   derby.use(require('racer-schema'), require('./schema'));<% } %>
 <% if (redis) { %>
-  var redis = require('redis');
+  var redis = require('redis-url');
   var livedb = require('livedb');
-  var redisClient = redis.createClient();
-  var redisObserver = redis.createClient();
 
-  redisClient.select(process.env.REDIS_DB);
-  redisObserver.select(process.env.REDIS_DB);
-
-  var redisDriver = livedb.redisDriver(mongo, redisClient, redisObserver);
+  var redisDriver = livedb.redisDriver(mongo, redis.connect(), redis.connect());
 
   var store = derby.createStore({
     backend: livedb.client({driver: redisDriver, db: mongo})

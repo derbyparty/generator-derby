@@ -7,15 +7,10 @@ module.exports = (derby, publicDir) ->
   derby.use require 'racer-bundle'<% if (schema) { %>
   derby.use require('racer-schema'), require('./schema')<% } %>
 <% if (redis) { %>
-  redis = require 'redis'
+  redis = require 'redis-url'
   livedb = require 'livedb'
-  redisClient = redis.createClient()
-  redisObserver = redis.createClient()
 
-  redisClient.select process.env.REDIS_DB
-  redisObserver.select process.env.REDIS_DB
-
-  redisDriver = livedb.redisDriver mongo, redisClient, redisObserver
+  redisDriver = livedb.redisDriver mongo, redis.connect(), redis.connect()
 
   store = derby.createStore
     backend: livedb.client driver: redisDriver, db: mongo
