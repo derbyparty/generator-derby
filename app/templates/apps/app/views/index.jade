@@ -4,9 +4,9 @@ Title:
   | {{_page.title}}
 
 Body:
-  view(name="header")
-  view(name="{{$render.ns}}")
-  view(name="footer", year="2014")
+  view(is="header")
+  view(is="{{$render.ns}}")
+  view(is="footer", year="2014")
 
 header:
   h1 Header

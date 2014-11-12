@@ -12,9 +12,9 @@ app.component(require('<%= component %>'));
 
 ## In your template
 ```<% if(jade){ %>jade
-view(name="<%= component %>")
+view(is="<%= component %>")
 <% } else { %>html
-<view name="<%= component %>"></view>
+<view is="<%= component %>"></view>
 <% } %>```
 
 ## see also:
