@@ -415,6 +415,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   },
   // App generation
   app: function () {
+    var boot = this.bootstrap ? 'bootstrap.' : '';
+
     var js    = this.coffee ? 'coffee': 'js';
     var html  = this.jade ? 'jade': 'html';
     var css   = this.stylus?  'styl': 'css';
@@ -425,11 +427,14 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template( 'apps/app/_index.' + js, appPath + '/index.'+js);
 
     this.mkdir(appPath + '/views');
-    this.copy('apps/app/views/index.'+html, appPath + '/views/index.'+html);
-    this.copy('apps/app/views/home.'+html, appPath + '/views/home.'+html);
+
+    this.copy('apps/app/views/index.' + boot + html, appPath + '/views/index.'+html);
+    this.copy('apps/app/views/home.' + boot + html, appPath + '/views/home.'+html);
+
 
     this.mkdir(appPath + '/styles');
-    this.copy('apps/app/styles/index.'+css, appPath + '/styles/index.'+css);
+    this.copy('apps/app/styles/index.' + boot + css, appPath + '/styles/index.'+css);
+
   },
 
   readProjectPackage: function(){
