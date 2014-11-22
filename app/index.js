@@ -207,6 +207,10 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         value: 'stylus',
         checked: true
       },{
+        name: 'derby-router', //app level
+        value: 'router',
+        checked: true
+      },{
         name: 'Markdown', //app level
         value: 'md',
         checked: false
@@ -229,6 +233,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.stylus     = hasFeature('stylus');
       this.md         = hasFeature('md');
       this.bootstrap  = hasFeature('bootstrap');
+      this.router     = hasFeature('router');
 
       done();
 
@@ -470,6 +475,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this._addNpmPackage('derby-markdown');
     }
 
+    if (this.router) {
+      this._addNpmPackage('derby-router');
+    }
   },
 
   installDependencies: function() {
