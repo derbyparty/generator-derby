@@ -3,17 +3,14 @@ module.exports = {
   collection: 'auths',
   // projection of db collection
   publicCollection: 'users',
+  user: {
+    id: true,
+    email: true
+  },
   // passportjs options
   passport: {
     successRedirect: '/',
-    failureRedirect: '/',
-    registerCallback: function(req, res, user, done) {
-      var model = req.getModel();
-      var $user = model.at('auths.' + user.id);
-      model.fetch($user, function() {
-        $user.set('email', $user.get('local.email'), done);
-      });
-    }
+    failureRedirect: '/'
   },
   strategies: {<% if (loginGithub) {%>
     github: {
@@ -60,9 +57,9 @@ module.exports = {
       }
     }<% } %>
   },
-  // projection
-  user: {
-    id: true,
-    email: true
-   }
-}
+  hooks: {
+    request: function(req, res, userId, isAuthenticated, done) {
+      done();
+    }
+  }
+};

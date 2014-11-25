@@ -3,6 +3,9 @@ module.exports =
   collection: 'auths'
   # projection of db collection
   publicCollection: 'users'
+  user:
+    id: true
+    email: true
   # passportjs options
   passport:
     successRedirect: '/'
@@ -45,7 +48,5 @@ module.exports =
         clientID: '4373291'
         clientSecret: 'fOZiLyGhSH1DHWLFFfZo'
         callbackURL: 'http://localhost:3000/auth/vkontakte/callback'<% } %>
-  # projection
-  user:
-    id: true
-    email: true
+  hooks:
+    request: (req, res, userId, isAuthenticated, done) -> done()
