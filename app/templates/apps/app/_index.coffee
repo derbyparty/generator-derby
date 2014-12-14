@@ -19,3 +19,15 @@ app.get 'home', '/'
 app.get '/', (page, model) ->
   page.render 'home'
 <% } %>
+<% if (login) { %>
+<% if (router) { %>
+app.get 'login', '/login'
+app.get 'register', '/register'
+<% } else { %>
+app.get '/login', (page) ->
+  page.render 'login'
+
+app.get '/register', (page) ->
+  page.render 'register'
+<% } %>
+<% } %>

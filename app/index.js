@@ -368,7 +368,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.npm.push('passport-google-oauth');
     }
 
-
     if (this.loginLinkedIn) {
       this.npm.push('passport-linkedin');
     }
@@ -433,8 +432,13 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.mkdir(appPath + '/views');
 
-    this.copy('apps/app/views/index.' + boot + html, appPath + '/views/index.'+html);
-    this.copy('apps/app/views/home.' + boot + html, appPath + '/views/home.'+html);
+    this.template('apps/app/views/_index.' + boot + html, appPath + '/views/index.'+html);
+    this.template('apps/app/views/_home.' + boot + html, appPath + '/views/home.'+html);
+
+    if (this.login && this.bootstrap){
+      this.template('apps/app/views/_login.' + boot + html, appPath + '/views/login.'+html);
+      this.template('apps/app/views/_register.' + boot + html, appPath + '/views/register.'+html);
+    }
 
 
     this.mkdir(appPath + '/styles');

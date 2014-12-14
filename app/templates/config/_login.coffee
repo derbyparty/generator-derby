@@ -6,6 +6,7 @@ module.exports =
   user:
     id: true
     email: true
+  confirmRegistration: false
   # passportjs options
   passport:
     successRedirect: '/'

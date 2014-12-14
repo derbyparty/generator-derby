@@ -20,3 +20,17 @@ app.get('/', function(page, model){
   page.render('home');
 });
 <% } %>
+<% if (login) { %>
+<% if (router) { %>
+app.get('login', '/login');
+app.get('register', '/register');
+<% } else { %>
+app.get('/login', function(page){
+  page.render('login');
+});
+
+app.get('/register', function(page){
+  page.render('register');
+});
+<% } %>
+<% } %>

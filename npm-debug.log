@@ -1,0 +1,210 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/home/zag2art/npm/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'phantomjs' ]
+2 info using npm@1.4.24
+3 info using node@v0.10.25
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'phantomjs', null ]
+6 verbose cache add name=undefined spec="phantomjs" args=["phantomjs",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'phantomjs',
+7 verbose parsed url   path: 'phantomjs',
+7 verbose parsed url   href: 'phantomjs' }
+8 silly lockFile 30d7cd7d-phantomjs phantomjs
+9 verbose lock phantomjs /home/zag2art/.npm/30d7cd7d-phantomjs.lock
+10 silly lockFile 30d7cd7d-phantomjs phantomjs
+11 silly lockFile 30d7cd7d-phantomjs phantomjs
+12 verbose addNamed [ 'phantomjs', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 29cf7fd6-phantomjs phantomjs@
+15 verbose lock phantomjs@ /home/zag2art/.npm/29cf7fd6-phantomjs.lock
+16 silly addNameRange { name: 'phantomjs', range: '*', hasData: false }
+17 verbose request where is /phantomjs
+18 verbose request registry http://npm.idecisiongames.com/
+19 verbose request id ff3f8176dd19b82e
+20 verbose url raw /phantomjs
+21 verbose url resolving [ 'http://npm.idecisiongames.com/', './phantomjs' ]
+22 verbose url resolved http://npm.idecisiongames.com/phantomjs
+23 verbose request where is http://npm.idecisiongames.com/phantomjs
+24 info trying registry request attempt 1 at 11:02:13
+25 verbose etag "8fba5bd9920916b01551885a12f74f58"
+26 http GET http://npm.idecisiongames.com/phantomjs
+27 http 304 http://npm.idecisiongames.com/phantomjs
+28 silly registry.get cb [ 304,
+28 silly registry.get   { server: 'nginx/1.6.0',
+28 silly registry.get     date: 'Tue, 25 Nov 2014 08:02:13 GMT',
+28 silly registry.get     connection: 'keep-alive',
+28 silly registry.get     'x-powered-by': 'Sinopia/0.12.1',
+28 silly registry.get     etag: '"8fba5bd9920916b01551885a12f74f58"',
+28 silly registry.get     'x-status-cat': 'http://flic.kr/p/aXY3dH' } ]
+29 verbose etag http://npm.idecisiongames.com/phantomjs from cache
+30 silly addNameRange number 2 { name: 'phantomjs', range: '*', hasData: true }
+31 silly addNameRange versions [ 'phantomjs',
+31 silly addNameRange   [ '0.0.1',
+31 silly addNameRange     '0.0.2',
+31 silly addNameRange     '0.0.3',
+31 silly addNameRange     '0.0.4',
+31 silly addNameRange     '0.0.5',
+31 silly addNameRange     '0.0.6',
+31 silly addNameRange     '0.0.7',
+31 silly addNameRange     '0.0.8',
+31 silly addNameRange     '0.0.9',
+31 silly addNameRange     '0.1.0',
+31 silly addNameRange     '0.1.1',
+31 silly addNameRange     '0.2.0',
+31 silly addNameRange     '0.2.1',
+31 silly addNameRange     '0.2.2',
+31 silly addNameRange     '0.2.3',
+31 silly addNameRange     '0.2.4',
+31 silly addNameRange     '0.2.5',
+31 silly addNameRange     '0.2.6',
+31 silly addNameRange     '1.8.0-1',
+31 silly addNameRange     '1.8.1-1',
+31 silly addNameRange     '1.8.1-2',
+31 silly addNameRange     '1.8.1-3',
+31 silly addNameRange     '1.8.2-0',
+31 silly addNameRange     '1.8.2-1',
+31 silly addNameRange     '1.8.2-2',
+31 silly addNameRange     '1.9.0-0',
+31 silly addNameRange     '1.9.0-1',
+31 silly addNameRange     '1.9.0-2',
+31 silly addNameRange     '1.9.0-3',
+31 silly addNameRange     '1.9.0-4',
+31 silly addNameRange     '1.9.0-5',
+31 silly addNameRange     '1.9.0-6',
+31 silly addNameRange     '1.9.1-0',
+31 silly addNameRange     '1.9.1-2',
+31 silly addNameRange     '1.9.1-3',
+31 silly addNameRange     '1.9.1-4',
+31 silly addNameRange     '1.9.1-5',
+31 silly addNameRange     '1.9.1-6',
+31 silly addNameRange     '1.9.1-7',
+31 silly addNameRange     '1.9.1-8',
+31 silly addNameRange     '1.9.1-9',
+31 silly addNameRange     '1.9.2-0',
+31 silly addNameRange     '1.9.2-1',
+31 silly addNameRange     '1.9.2-2',
+31 silly addNameRange     '1.9.2-3',
+31 silly addNameRange     '1.9.2-4',
+31 silly addNameRange     '1.9.2-5',
+31 silly addNameRange     '1.9.2-6',
+31 silly addNameRange     '1.9.6-0',
+31 silly addNameRange     '1.9.7-1',
+31 silly addNameRange     '1.9.7-3',
+31 silly addNameRange     '1.9.7-4',
+31 silly addNameRange     '1.9.7-5',
+31 silly addNameRange     '1.9.7-6',
+31 silly addNameRange     '1.9.7-7',
+31 silly addNameRange     '1.9.7-8',
+31 silly addNameRange     '1.9.7-9',
+31 silly addNameRange     '1.9.7-10',
+31 silly addNameRange     '1.9.7-11',
+31 silly addNameRange     '1.9.7-12',
+31 silly addNameRange     '1.9.7-13',
+31 silly addNameRange     '1.9.7-14',
+31 silly addNameRange     '1.9.7-15',
+31 silly addNameRange     '1.8.2-3',
+31 silly addNameRange     '1.9.8',
+31 silly addNameRange     '1.9.9',
+31 silly addNameRange     '1.9.10',
+31 silly addNameRange     '1.9.11',
+31 silly addNameRange     '1.9.12' ] ]
+32 verbose addNamed [ 'phantomjs', '1.9.12' ]
+33 verbose addNamed [ '1.9.12', '1.9.12' ]
+34 silly lockFile ad41401c-phantomjs-1-9-12 phantomjs@1.9.12
+35 verbose lock phantomjs@1.9.12 /home/zag2art/.npm/ad41401c-phantomjs-1-9-12.lock
+36 silly lockFile ad41401c-phantomjs-1-9-12 phantomjs@1.9.12
+37 silly lockFile ad41401c-phantomjs-1-9-12 phantomjs@1.9.12
+38 silly lockFile 29cf7fd6-phantomjs phantomjs@
+39 silly lockFile 29cf7fd6-phantomjs phantomjs@
+40 silly resolved [ { name: 'phantomjs',
+40 silly resolved     version: '1.9.12',
+40 silly resolved     keywords: [ 'phantomjs', 'headless', 'webkit' ],
+40 silly resolved     description: 'Headless WebKit with JS API',
+40 silly resolved     homepage: 'https://github.com/Obvious/phantomjs',
+40 silly resolved     repository: { type: 'git', url: 'git://github.com/Obvious/phantomjs.git' },
+40 silly resolved     licenses: [ [Object] ],
+40 silly resolved     author:
+40 silly resolved      { name: 'Dan Pupius',
+40 silly resolved        email: 'dan@obvious.com',
+40 silly resolved        url: 'http://pupius.co.uk' },
+40 silly resolved     maintainers: [ [Object], [Object], [Object] ],
+40 silly resolved     main: 'lib/phantomjs',
+40 silly resolved     bin: { phantomjs: './bin/phantomjs' },
+40 silly resolved     scripts:
+40 silly resolved      { install: 'node install.js',
+40 silly resolved        test: 'nodeunit --reporter=minimal test/tests.js' },
+40 silly resolved     dependencies:
+40 silly resolved      { 'adm-zip': '0.4.4',
+40 silly resolved        kew: '0.4.0',
+40 silly resolved        ncp: '~1.0.1',
+40 silly resolved        npmconf: '2.0.9',
+40 silly resolved        mkdirp: '0.5.0',
+40 silly resolved        progress: '1.1.8',
+40 silly resolved        request: '2.42.0',
+40 silly resolved        'request-progress': '0.3.1',
+40 silly resolved        rimraf: '~2.2.8',
+40 silly resolved        which: '~1.0.5' },
+40 silly resolved     devDependencies: { nodeunit: '0.9.0' },
+40 silly resolved     gitHead: 'bf1ec7ae211b8162779be59e945b92613ffe8d4e',
+40 silly resolved     bugs: { url: 'https://github.com/Obvious/phantomjs/issues' },
+40 silly resolved     _id: 'phantomjs@1.9.12',
+40 silly resolved     _shasum: '812b137654585413ecb82bf3db9dcd39d8f85f91',
+40 silly resolved     _from: 'phantomjs@',
+40 silly resolved     _npmVersion: '1.4.24',
+40 silly resolved     _npmUser: { name: 'nicks', email: 'nicholas.j.santos@gmail.com' },
+40 silly resolved     dist:
+40 silly resolved      { shasum: '812b137654585413ecb82bf3db9dcd39d8f85f91',
+40 silly resolved        tarball: 'http://npm.idecisiongames.com/phantomjs/-/phantomjs-1.9.12.tgz' },
+40 silly resolved     directories: {},
+40 silly resolved     _resolved: 'http://npm.idecisiongames.com/phantomjs/-/phantomjs-1.9.12.tgz',
+40 silly resolved     readme: 'ERROR: No README data found!' } ]
+41 info install phantomjs@1.9.12 into /usr/lib
+42 info installOne phantomjs@1.9.12
+43 verbose lib/node_modules/phantomjs unbuild
+44 verbose tar unpack /home/zag2art/.npm/phantomjs/1.9.12/package.tgz
+45 silly lockFile ce07c23f-r-usr-lib-node-modules-phantomjs tar:///usr/lib/node_modules/phantomjs
+46 verbose lock tar:///usr/lib/node_modules/phantomjs /home/zag2art/.npm/ce07c23f-r-usr-lib-node-modules-phantomjs.lock
+47 silly lockFile 668119bc-npm-phantomjs-1-9-12-package-tgz tar:///home/zag2art/.npm/phantomjs/1.9.12/package.tgz
+48 verbose lock tar:///home/zag2art/.npm/phantomjs/1.9.12/package.tgz /home/zag2art/.npm/668119bc-npm-phantomjs-1-9-12-package-tgz.lock
+49 silly gunzTarPerm modes [ '775', '664' ]
+50 error Error: EACCES, mkdir '/usr/lib/node_modules'
+50 error  { [Error: EACCES, mkdir '/usr/lib/node_modules']
+50 error   errno: 3,
+50 error   code: 'EACCES',
+50 error   path: '/usr/lib/node_modules',
+50 error   fstream_type: 'Directory',
+50 error   fstream_path: '/usr/lib/node_modules/phantomjs',
+50 error   fstream_class: 'DirWriter',
+50 error   fstream_stack:
+50 error    [ '/home/zag2art/npm/lib/node_modules/npm/node_modules/fstream/lib/writer.js:171:23',
+50 error      '/home/zag2art/npm/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+50 error      'Object.oncomplete (fs.js:107:15)' ] }
+51 error Please try running this command again as root/Administrator.
+52 error System Linux 3.13.0-39-generic
+53 error command "node" "/home/zag2art/npm/bin/npm" "install" "-g" "phantomjs"
+54 error cwd /home/zag2art/work/generator-derby
+55 error node -v v0.10.25
+56 error npm -v 1.4.24
+57 error path /usr/lib/node_modules
+58 error fstream_path /usr/lib/node_modules/phantomjs
+59 error fstream_type Directory
+60 error fstream_class DirWriter
+61 error code EACCES
+62 error errno 3
+63 error stack Error: EACCES, mkdir '/usr/lib/node_modules'
+64 error fstream_stack /home/zag2art/npm/lib/node_modules/npm/node_modules/fstream/lib/writer.js:171:23
+64 error fstream_stack /home/zag2art/npm/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+64 error fstream_stack Object.oncomplete (fs.js:107:15)
+65 verbose exit [ 3, true ]
