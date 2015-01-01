@@ -59,6 +59,8 @@ The package and class name will be derived from the dashed name, f.e `d-new-comp
 If you use redis in you derby-project take into account that REDIS_URL is in the 
 format: `redis://[db-number[:password]@]host:port[?option=value]` see 
 [redis-url](https://github.com/ddollar/redis-url)  
+
+To debug you app in the browser console use: `APP` and `MODEL` global variables.
   
 ## MIT License
 Copyright (c) 2014 by Artur Zayats

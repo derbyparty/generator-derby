@@ -326,7 +326,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      'derby', // 'derby@0.6.0-alpha22'
+      'derby@0.6.0-alpha31', // 'derby@0.6.0-alpha22'
 
       'livedb-mongo',
       'racer-bundle',
@@ -462,6 +462,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
   appDependencies: function(){
 
     this.npm = this.npm || [];
+
+    this._addNpmPackage('derby-debug');
 
     if (this.jade) {
       this._addNpmPackage('derby-jade');
