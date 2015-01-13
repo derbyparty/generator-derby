@@ -34,6 +34,26 @@ Create a new Derby project.
 #### `yo derby app-name`
 Create a new additional Derby app. Inside existing Derby-project (created by generator-derby).
 
+#### `yo derby:mini`
+Create a new mini javascript Derby-project based on `derby-starter`. This is 
+useful for bug reports and simple experiments.
+
+How to use:
+
+- Make a project dir: `mkdir buggy`
+- Go into the dir: `cd buggy`
+- Generate: `yo derby:mini`
+- Start: `npm start`
+ 
+The created project has the very simple structure:
+
+`index.js` - the very basic derby-app.
+`index.html` - html-file for the app.
+`server.js` - bootstraping server-part
+
+Note: you should have `mongo` and `redis` installed (At the moment `derby-starter`
+required `redis`, so make sure you have it).  
+
 #### `yo derby:component component-name`
 Creates a [Derby component][] inside current folder.
 

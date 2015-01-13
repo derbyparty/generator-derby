@@ -12,6 +12,7 @@
   "directories": {
     "app": "app",
     "component": "component",
+    "mini": "mini",
     "test": "test"
   },
   "author": {

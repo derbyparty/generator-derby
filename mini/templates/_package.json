@@ -1,0 +1,18 @@
+{
+  "name": "<%= _.slugify(appname) %>",
+  "version": "1.0.0",
+  "description": "Mini derby-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "derby", "mini"
+  ],
+  "dependencies": {
+    "derby-starter": "^0.2.6",
+    "derby-debug": "^0.1.0"
+  },
+  "author": "",
+  "license": "MIT"
+}
