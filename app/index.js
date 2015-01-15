@@ -326,7 +326,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      'derby@0.6.0-alpha31', // 'derby@0.6.0-alpha22'
+      'derby@0.6.0-alpha32', 
 
       'livedb-mongo',
       'racer-bundle',
