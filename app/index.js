@@ -326,7 +326,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      'derby@0.6.0-alpha32', 
+      'derby@0.6.0-alpha32',
 
       'livedb-mongo',
       'racer-bundle',
@@ -477,7 +477,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this._addNpmPackage('d-bootstrap');
     }
 
-    if (this.markdown) {
+    if (this.md) {
       this._addNpmPackage('derby-markdown');
     }
 

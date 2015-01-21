@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {},
-  "peerDependencies": {<% if (stylus) { %>
-    "derby-jade": "*",<% } %><% if (jade) { %>
+  "peerDependencies": {<% if (jade) { %>
+    "derby-jade": "*",<% } %><% if (stylus) { %>
     "derby-stylus": "*",<% } %><% if (coffee) { %>
     "coffee-script": "*",<% } %>
     "derby": ">= 0.6.0 < 0.7"
