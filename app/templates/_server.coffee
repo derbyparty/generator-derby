@@ -34,7 +34,7 @@ derby.run () -><% if (yamlify) { %>
       else
         console.log 'Bundle created:', chalk.blue(app.name)
 
-      cb();
+      cb()
 
   async.each apps, bundleApp, () -> server.listen process.env.PORT, () ->
     console.log '%d listening. Go to: http://localhost:%d/',
