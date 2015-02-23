@@ -1,4 +1,4 @@
-class <%= className %>
+module.exports = class <%= className %>
 
   view:  __dirname
   style: __dirname
@@ -10,4 +10,3 @@ class <%= className %>
 
   destroy: ->
 
-module.exports = <%= className %>
