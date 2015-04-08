@@ -10,7 +10,7 @@
     "derby", "mini"
   ],
   "dependencies": {
-    "derby": "0.6.0-alpha35",
+    "derby": "0.6.0-alpha45",
     "derby-starter": "^0.2.6",
     "derby-debug": "^0.1.0"
   },
