@@ -268,7 +268,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     if (this.appMode) {
       return;
     }
-    
+
     var js    = this.coffee ? 'coffee': 'js';
 
     this.mkdir('components');
@@ -326,7 +326,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      'derby@0.6.0-alpha45',
+      //'derby@0.6.0-alpha45',
 
       'livedb-mongo',
       'racer-bundle',
