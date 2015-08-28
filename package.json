@@ -41,6 +41,7 @@
   ],
   "dependencies": {
     "yeoman-generator": "~0.16.0",
+    "derby": "*",
     "chalk": "~0.4.0",
     "yosay": "^0.1.0",
     "update-notifier": "~0.2.0"
