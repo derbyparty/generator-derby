@@ -1,26 +1,30 @@
-var liveDbMongo = require('livedb-mongo');
+var shareDbMongo = require('sharedb-mongo');
 var coffeeify = require('coffeeify');<% if (yamlify) { %>
 var yamlify = require('yamlify');<% } %>
 
 module.exports = store;
 
 function store(derby, publicDir) {
-  var mongo = liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true});
+  var db = shareDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true});
 
   derby.use(require('racer-bundle'));<% if (schema) { %>
   derby.use(require('racer-schema'), require('./schema'));<% } %>
 <% if (redis) { %>
   var redis = require('redis-url');
-  var livedb = require('livedb');
+  var redisPubSub = require('sharedb-redis-pubsub');
 
-  var redisDriver = livedb.redisDriver(mongo, redis.connect(), redis.connect());
+  var pubsub = redisPubSub({
+    client: redis.connect(),
+    observer: redis.connect()
+  });
 
   var store = derby.createStore({
-    backend: livedb.client({driver: redisDriver, db: mongo})
+    db: db,
+    pubsub: pubsub
   });
 <% } else { %>
 
-  var store = derby.createStore({db: mongo});
+  var store = derby.createStore({db: db});
 <% } %>
   store.on('bundle', function(browserify) {
 

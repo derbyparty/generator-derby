@@ -326,9 +326,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      //'derby@0.6.0-alpha45',
+      'derby@0.6.0',
 
-      'livedb-mongo',
+      'sharedb-mongo',
       'racer-bundle',
       'racer-highway',
 
@@ -347,7 +347,6 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       'body-parser',
       'express-session',
       'serve-static',
-      'serve-favicon',
       'compression',
       'serve-favicon'
     ];
@@ -386,7 +385,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     if (this.redis) {
       this.npm.push('redis-url');
-      this.npm.push('livedb');
+      this.npm.push('sharedb-redis-pubsub');
     }
 
   },

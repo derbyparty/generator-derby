@@ -1,23 +1,22 @@
-liveDbMongo = require 'livedb-mongo'
+shareDbMongo = require 'sharedb-mongo'
 coffeeify = require 'coffeeify'<% if (yamlify) { %>
 yamlify = require 'yamlify'<% } %>
 
 module.exports = (derby, publicDir) ->
-  mongo = liveDbMongo process.env.MONGO_URL + '?auto_reconnect', {safe: true}
+  db = shareDbMongo process.env.MONGO_URL + '?auto_reconnect', {safe: true}
   derby.use require 'racer-bundle'<% if (schema) { %>
   derby.use require('racer-schema'), require('./schema')<% } %>
 <% if (redis) { %>
   redis = require 'redis-url'
-  livedb = require 'livedb'
+  redisPubSub = require 'sharedb-redis-pubsub'
 
-  redisDriver = livedb.redisDriver mongo, redis.connect(), redis.connect()
+  pubsub = redisPubSub client: redis.connect(), observer: redis.connect()
 
-  store = derby.createStore
-    backend: livedb.client driver: redisDriver, db: mongo
+  store = derby.createStore {db, pubsub}
 
 <% } else { %>
 
-  store = derby.createStore db: mongo
+  store = derby.createStore {db}
 <% } %>
   store.on 'bundle', (browserify) ->
 
