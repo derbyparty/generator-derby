@@ -3,7 +3,7 @@ coffeeify = require 'coffeeify'<% if (yamlify) { %>
 yamlify = require 'yamlify'<% } %>
 
 module.exports = (derby, publicDir) ->
-  db = shareDbMongo process.env.MONGO_URL + '?auto_reconnect', {safe: true}
+  db = shareDbMongo process.env.MONGO_URL + '?auto_reconnect=true', {safe: true}
   derby.use require 'racer-bundle'<% if (schema) { %>
   derby.use require('racer-schema'), require('./schema')<% } %>
 <% if (redis) { %>
