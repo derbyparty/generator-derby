@@ -228,12 +228,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (answers) {
+      var features = answers.features;
 
       function hasFeature(feat) {
         return features && features.indexOf(feat) !== -1;
       }
-
-      var features = answers.features;
 
       this.jade       = hasFeature('jade');
       this.stylus     = hasFeature('stylus');
@@ -314,7 +313,9 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.template('_package.json', 'package.json');
 
-    if (this.win) this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json');
+    if (this.win) {
+      this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json');
+    }
 
     if (this.bower) {
       this.mkdir('bower_components');
