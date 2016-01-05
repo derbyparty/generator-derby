@@ -107,6 +107,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
         value: 'bower',
         message: 'Would you like to create initial Bower files and dirs?',
         checked: false
+      },{
+        name: 'Windows support', //proj level
+        value: 'win',
+        message: 'Would you like to add win support?',
+        checked: false
       }]
     }, {
       when: function (answers) {
@@ -156,6 +161,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
       this.schema  = hasFeature('schema');
       this.yamlify  = hasFeature('yamlify');
       this.bower = hasFeature('bower');
+      this.win = hasFeature('win');
 
       this.loginGithub = hasLoginPackage('loginGithub');
       this.loginGoogle = hasLoginPackage('loginGoogle');
@@ -307,6 +313,8 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     this.template('_server.'+js, 'server.'+js);
 
     this.template('_package.json', 'package.json');
+
+    if (this.win) this.template('_npm-shrinkwrap.json', 'npm-shrinkwrap.json');
 
     if (this.bower) {
       this.mkdir('bower_components');

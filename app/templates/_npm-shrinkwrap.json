@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "browserify": {
+      "version": "12.0.1",
+      "from": "browserify@>=12.0.1 <13.0.0",
+      "dependencies": {
+        "path-browserify": {
+          "version": "0.1.0",
+          "from": "git://github.com/bbweb/path-browserify.git#general-version"
+        }
+      }
+    }
+  }
+}
