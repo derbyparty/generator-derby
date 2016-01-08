@@ -12,11 +12,11 @@ module.exports = (derby, publicDir) ->
 
   pubsub = redisPubSub client: redis.connect(), observer: redis.connect()
 
-  store = derby.createStore {db, pubsub}
+  store = derby.createBackend {db, pubsub}
 
 <% } else { %>
 
-  store = derby.createStore {db}
+  store = derby.createBackend {db}
 <% } %>
   store.on 'bundle', (browserify) ->
 

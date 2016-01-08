@@ -18,13 +18,13 @@ function store(derby, publicDir) {
     observer: redis.connect()
   });
 
-  var store = derby.createStore({
+  var store = derby.createBackend({
     db: db,
     pubsub: pubsub
   });
 <% } else { %>
 
-  var store = derby.createStore({db: db});
+  var store = derby.createBackend({db: db});
 <% } %>
   store.on('bundle', function(browserify) {
 

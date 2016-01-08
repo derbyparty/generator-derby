@@ -326,7 +326,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
     this.npm = [
       // Derby
-      'derby@0.7.1',
+      'derby@0.8.0',
 
       'sharedb-mongo',
       'racer-bundle',
@@ -342,7 +342,7 @@ var DerbyGenerator = yeoman.generators.Base.extend({
 
       // Express
       'express',
-      'connect-mongo',
+      'connect-mongo@0.8.2',
       'cookie-parser',
       'body-parser',
       'express-session',
