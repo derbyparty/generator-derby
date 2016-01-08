@@ -5,7 +5,7 @@ var yamlify = require('yamlify');<% } %>
 module.exports = store;
 
 function store(derby, publicDir) {
-  var db = shareDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true});
+  var db = shareDbMongo(process.env.MONGO_URL + '?auto_reconnect=true', {safe: true});
 
   derby.use(require('racer-bundle'));<% if (schema) { %>
   derby.use(require('racer-schema'), require('./schema'));<% } %>
