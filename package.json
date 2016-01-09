@@ -25,7 +25,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jshint test/*.js app/*.js component/*.js && ./node_modules/.bin/mocha"
+    "test": "jshint test app/index.js component/index.js && mocha"
   },
   "licenses": [
     {
