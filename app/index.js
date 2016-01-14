@@ -222,12 +222,11 @@ var DerbyGenerator = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (answers) {
+      var features = answers.features;
 
       function hasFeature(feat) {
         return features && features.indexOf(feat) !== -1;
       }
-
-      var features = answers.features;
 
       this.jade       = hasFeature('jade');
       this.stylus     = hasFeature('stylus');
