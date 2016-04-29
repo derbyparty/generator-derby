@@ -1,6 +1,6 @@
 var derby = require('derby');
 
-var errorApp = module.exports = derby.createApp();
+var errorApp = module.exports = derby.createApp('error', __filename);
 <% if (jade) { %>
 errorApp.serverUse(module,'derby-jade');<% } %><% if (stylus) { %>
 errorApp.serverUse(module, 'derby-stylus');<% } %>
